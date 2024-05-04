@@ -8,13 +8,27 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        theme: "#7743DB",
+        light: {
+          primary: "bg-white",
+          secondary: "#BAE0BD",
+        },
+        dark: {
+          primary: "bg-slate-850",
+          secondary: "#202020",
+        },
+        background: "#F5F5F5",
+      },
+      maxHeight: {
+        "18": "5rem",
+      },
+      gridTemplateColumns: {
+        rep: "repeat(4, 1fr)",
       },
     },
   },
   plugins: [],
+  darkMode: "selector",
 };
 export default config;
