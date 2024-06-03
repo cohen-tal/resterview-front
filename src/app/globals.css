@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* html,
+body {
+  width: 100%;
+  position: relative;
+} */
+
+/* Custom class using @apply for common styles */
+.arrow-right {
+  @apply absolute w-full h-full bg-gradient-to-r from-cyan-200 to-emerald-200;
+}
+
 * {
   box-sizing: border-box;
 }
