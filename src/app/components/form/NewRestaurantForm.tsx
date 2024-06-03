@@ -12,7 +12,7 @@ import { RestaurantFormSchema } from "@/utils/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputControllerWrapper from "../wrappers/InputControllerWrapper";
 import NewRestaurantButton from "../buttons/NewRestaurantButton";
-// import InputSearchBox from "./InputSearchBox";
+import InputSearchBox from "./InputSearchBox";
 
 const variants: Variants = {
   left: {
@@ -123,8 +123,6 @@ export default function NewRestaurantForm() {
     setStep("step1");
   }
 
-  console.log(errors.address);
-
   return (
     <div className="relative flex flex-col items-center justify-center w-96 lg:w-[45%] h-[500px] border m-auto rounded-lg shadow-lg overflow-hidden">
       <FormStepper stepToAnimate={step} />
@@ -178,7 +176,7 @@ export default function NewRestaurantForm() {
               index={3}
               control={control}
             /> */}
-            {/* <InputSearchBox index={3} /> */}
+            <InputSearchBox index={3} valid />
             <div className="p-4">
               <Map />
             </div>
