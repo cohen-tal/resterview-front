@@ -1,30 +1,43 @@
+"use client";
 import Image from "next/image";
-import CategoriesContainer from "./components/containers/CategoriesContainer";
 import SearchBox from "./components/navbar/SearchBox";
-import RecentActivity from "./components/containers/RecentActivity";
+import RecentReviewsContainer from "./components/containers/RecentReviewsContainer";
+import RecentRestaurantsContainer from "./components/containers/RecentRestaurantsContainer";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+//bg-[#f0efe9]
 
 export default function Home() {
+  const matches = useMediaQuery("(min-width:1024px)");
+  console.log(matches);
+
   return (
-    <main className="flex min-h-screen flex-col items-center gap-2 bg-floral_white dark:bg-slate-900">
-      {/* <CategoriesContainer /> */}
-      <div className="relative flex flex-col items-center w-full h-80">
+    <main className="main flex flex-col items-center gap-2 dark:bg-slate-900 overflow-x-hidden">
+      <div className="relative flex flex-col items-center justify-center w-full h-80 lg:h-[40rem] mb-8">
         <h1
-          className="relative font-sedan-sc whitespace-pre-wrap md:whitespace-normal mt-11 p-2 font-bold text-3xl text-eggshell z-50"
-          style={{ textShadow: "0 0 2px #000, 0 0 3px #000, 0 0 15px #fff" }}
+          className="font-sedan-sc whitespace-pre-wrap md:whitespace-normal lg:-mt-56 text-floral_white p-8 font-bold text-3xl lg:text-6xl z-50"
+          style={{ textShadow: "0 0 2px #000, 0 0 3px #000" }}
         >
           {"Savor the Reviews.\nDiscover the Flavors."}
         </h1>
         <Image
-          src="/landing4.png"
+          src={matches ? "/landing1.jpg" : "/landing-plate.png"}
           alt="Landing page picture"
-          fill
-          style={{
-            objectFit: "cover",
-          }}
+          layout="fill"
+          objectFit="cover"
+          quality={100}
         />
-        <SearchBox />
+        {matches && <SearchBox />}
       </div>
-      <RecentActivity />
+
+      <section className="bg-white/40 dark:bg-slate-800 shadow-md rounded-full mb-8">
+        {!matches && <SearchBox />}
+      </section>
+
+      <section className="w-full bg-white/15 dark:bg-slate-800 shadow-sm mb-4">
+        <RecentReviewsContainer />
+      </section>
+      <RecentRestaurantsContainer />
     </main>
   );
 }
