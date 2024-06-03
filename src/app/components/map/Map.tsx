@@ -14,7 +14,7 @@ export default function Map() {
   });
 
   return (
-    <div className="map">
+    <div>
       <MapContainer
         center={[32.109333, 34.855499]}
         zoom={15}
