@@ -8,7 +8,7 @@ export interface FormInputProps {
   label?: string;
   accept?: string;
   multiple?: boolean;
-  // value?: string | number;
+  value?: string | readonly string[] | number | undefined;
   placeHolder?: string;
   error?: string;
   valid?: boolean;
@@ -29,6 +29,7 @@ function FormInput(
     valid,
     index,
     accept,
+    value = "",
     multiple = false,
     placeHolder,
     isTextArea = false,
