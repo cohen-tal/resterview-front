@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Poltawski_Nowy, Roboto_Mono, Anton } from "next/font/google";
+import { Poltawski_Nowy, Roboto_Mono, Anton, Roboto } from "next/font/google";
 import NavBar from "./components/navbar/NavBar";
-import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "StarBite Reviews",
   description: "Restaurants reviews around you!",
 };
 
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700", "900"],
+  subsets: ["latin"],
+  variable: "--font-roboto",
+});
 const poltawoski_nowy = Poltawski_Nowy({
   subsets: ["latin"],
   display: "swap",
@@ -28,6 +32,8 @@ const anton = Anton({
   variable: "--font-anton",
 });
 
+//bg-gradient-to-br from-topLeft via-bottomLeft to-bottomRight
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,12 +42,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poltawoski_nowy.variable} ${roboto_mono.variable}`}
+      className={`${poltawoski_nowy.variable} ${roboto_mono.variable} ${roboto.variable}`}
     >
-      <body className="font-sans">
+      <body className="font-sans overflow-x-hidden min-h-screen">
         <NavBar />
         {children}
       </body>
     </html>
   );
+  //bg-[#fcfbf3]
 }
