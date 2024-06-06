@@ -6,7 +6,7 @@ interface NewRestaurantButtonProps {
   text: string;
   type?: "button" | "submit" | "reset";
   title?: string;
-  disabled: boolean;
+  disabled?: boolean;
   icon: "next" | "prev";
   onClick: () => void;
 }
@@ -21,7 +21,9 @@ export default function NewRestaurantButton({
 }: NewRestaurantButtonProps) {
   return (
     <m.button
-      className="absolute flex items-center justify-center border border-slate-300 rounded-full w-28 h-12 bg-slate-100/30 disabled:bg-gray-400 right-12 mt-1 mr-6 shadow-sm"
+      className={`absolute flex items-center justify-center border rounded-full bg-blue-400 text-white font-bold py-2 px-4 w-28 h-12 transition duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500 disabled:hover:border-slate-300  disabled:bg-transparent disabled:text-slate-300  shadow-sm mt-1 ${
+        icon === "next" ? "right-12" : "left-12"
+      }`}
       type={type}
       title={title}
       whileHover={{ scale: 1.1 }}
@@ -30,8 +32,9 @@ export default function NewRestaurantButton({
       onClick={onClick}
       disabled={disabled}
     >
+      {icon === "prev" && <ArrowBackIcon />}
       {text}
-      {icon === "next" ? <ArrowForwardIcon /> : <ArrowBackIcon />}
+      {icon === "next" && <ArrowForwardIcon />}
     </m.button>
   );
 }
