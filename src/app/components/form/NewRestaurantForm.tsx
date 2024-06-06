@@ -1,18 +1,22 @@
 "use client";
-import { ReactNode, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { Variants, motion } from "framer-motion";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import FormInput from "./FormInput";
 import FormStepper from "./FormStepper";
-import { Variants, motion } from "framer-motion";
 import Map from "../map/Map";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useForm, SubmitHandler } from "react-hook-form";
-import z from "zod";
-import { RestaurantFormSchema } from "@/utils/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
 import InputControllerWrapper from "../wrappers/InputControllerWrapper";
 import NewRestaurantButton from "../buttons/NewRestaurantButton";
 import InputSearchBox from "./InputSearchBox";
+import LocationMarker from "../map/LocationMarker";
+import { RestaurantFormSchema } from "@/utils/validation";
+import CircularProgress from "../progress/CircularProgress";
+import SubmitFormButton from "./SubmitFormButton";
 
 const variants: Variants = {
   left: {
@@ -70,13 +74,22 @@ function renderPrevButton(onClick: () => void): ReactNode {
 
 export default function NewRestaurantForm() {
   const {
+    register,
     watch,
     handleSubmit,
-    formState: { errors, isDirty },
+    setValue,
+    formState: { errors, isValid, isSubmitting, isSubmitSuccessful },
     control,
   } = useForm<z.infer<typeof RestaurantFormSchema>>({
     resolver: zodResolver(RestaurantFormSchema),
     mode: "onChange",
+    defaultValues: {
+      name: "",
+      description: "",
+      address: "",
+      lat: 0,
+      lng: 0,
+    },
   });
 
   const onSubmit: SubmitHandler<z.infer<typeof RestaurantFormSchema>> = (
@@ -91,6 +104,14 @@ export default function NewRestaurantForm() {
     "right",
     "right",
   ]);
+
+  const setCoords = useCallback(
+    (lat: number, lng: number) => {
+      setValue("lat", lat, { shouldValidate: true });
+      setValue("lng", lng, { shouldValidate: true });
+    },
+    [setValue]
+  );
 
   function handleSubmitStep1() {
     setDirection((prev) => {
@@ -169,39 +190,58 @@ export default function NewRestaurantForm() {
             variants={variants}
             className="absolute w-full"
           >
-            {/* <InputControllerWrapper
-              type="text"
-              name="address"
-              placeholder="Address"
+            <input type="text" hidden {...register("address")} />
+            <input type="text" hidden {...register("lat")} />
+            <input type="text" hidden {...register("lng")} />
+            <InputSearchBox
               index={3}
-              control={control}
-            /> */}
-            <InputSearchBox index={3} valid />
+              valid={
+                watch("address") === undefined || watch("address") === ""
+                  ? undefined
+                  : errors.address || errors.lat || errors.lng
+                  ? false
+                  : true
+              }
+              onItemClick={[
+                setCoords,
+                (value: string) =>
+                  setValue("address", value, { shouldValidate: true }),
+              ]}
+            />
             <div className="p-4">
-              <Map />
+              <Map>
+                <LocationMarker
+                  title={watch("name")}
+                  content={watch("description")}
+                  draggable
+                  onDrag={setCoords}
+                  position={[watch("lat"), watch("lng")]}
+                />
+              </Map>
             </div>
-            {renderNextButton(
-              () => {
-                setDirection((prev) => {
-                  const newState = [...prev];
-                  newState[0] = "left";
-                  newState[1] = "left";
-                  newState[2] = "center";
-                  return newState;
-                });
-                setStep("step3");
-              },
-              errors.address ? true : false
-            )}
-            {renderPrevButton(() => {
-              setDirection((prev) => {
-                const newState = [...prev];
-                newState[0] = "center";
-                newState[1] = "right";
-                return newState;
-              });
-              setStep("step1");
-            })}
+            <NewRestaurantButton
+              type={"button"}
+              title="Next"
+              text="Next"
+              icon="next"
+              onClick={handleSubmitStep2}
+              disabled={
+                errors.address ||
+                errors.lat ||
+                errors.lng ||
+                watch("address") === ""
+                  ? true
+                  : false
+              }
+            />
+            <NewRestaurantButton
+              type={"button"}
+              title="Previous"
+              text="Previous"
+              icon="prev"
+              onClick={handlePrevStep2}
+              disabled={false}
+            />
           </motion.div>
           <motion.div
             initial="right"
@@ -217,7 +257,7 @@ export default function NewRestaurantForm() {
               placeHolder="Upload Images"
               index={5}
             />
-            <button type="submit">Send</button>
+            <SubmitFormButton submitting={isSubmitting} />
           </motion.div>
         </form>
       </div>
