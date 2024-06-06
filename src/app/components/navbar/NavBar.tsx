@@ -12,7 +12,7 @@ interface NavBarProps {
 export default function NavBar({ layout, children }: NavBarProps) {
   return (
     <div className="flex flex-col items-center bg-transparent">
-      <div className="flex items-center justify-between w-full border p-5 z-50 mb-6">
+      <div className="flex items-center justify-between w-full border p-3 z-50 mb-6">
         {/* <Image src="/logo.png" alt="logo" width={64} height={64} /> */}
         {/* <BurgerMenu>test test</BurgerMenu> */}
         <SearchBox />
