@@ -1,6 +1,5 @@
 import React, { HTMLInputTypeAttribute, forwardRef } from "react";
 import FormCircularIndex from "./FormCircularIndex";
-import { ChangeHandler } from "react-hook-form";
 
 export interface FormInputProps {
   type: HTMLInputTypeAttribute;
@@ -29,7 +28,6 @@ function FormInput(
     valid,
     index,
     accept,
-    value = "",
     multiple = false,
     placeHolder,
     isTextArea = false,
