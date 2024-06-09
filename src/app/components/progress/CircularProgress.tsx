@@ -1,6 +1,10 @@
 import { Variants, motion } from "framer-motion";
 
-export default function CircularProgress() {
+interface CircularProgressProps {
+  color: string;
+}
+
+export default function CircularProgress({ color }: CircularProgressProps) {
   const radius = 10;
   const circumference = 2 * Math.PI * radius;
 
@@ -19,12 +23,12 @@ export default function CircularProgress() {
   };
 
   return (
-    <motion.svg width="40" height="40" viewBox="0 0 40 40">
+    <motion.svg width="50" height="20" viewBox="0 0 50 20">
       <motion.circle
-        cx="20"
-        cy="20"
+        cx="25"
+        cy="10"
         r={radius}
-        stroke="#0099ff"
+        stroke={color}
         strokeWidth="10"
         fill="none"
         strokeDasharray={circumference}
