@@ -1,4 +1,3 @@
-import { control } from "leaflet";
 import React, { HTMLInputTypeAttribute } from "react";
 import { Control, Controller } from "react-hook-form";
 import FormInput from "../form/FormInput";
