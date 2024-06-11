@@ -36,14 +36,14 @@ function FormInput(
   ref: React.Ref<HTMLInputElement | HTMLTextAreaElement>
 ) {
   return (
-    <div className="relative w-full flex flex-col p-4 pb-2">
+    <div className="relative w-full flex flex-col p-4">
       <div className="flex items-center gap-1">
         {index && <FormCircularIndex value={index} valid={valid} />}
         {isTextArea ? (
           <textarea
             ref={ref as React.Ref<HTMLTextAreaElement>}
             placeholder={placeHolder}
-            className={`p-2 border rounded-md focus:outline-blue-400 dark:focus:outline-cyan-200 w-full resize-none h-60
+            className={`p-2 border rounded-md focus:outline-blue-400 dark:focus:outline-cyan-200 w-full resize-none h-64
             ${
               valid === undefined
                 ? "bg-slate-50/70"
