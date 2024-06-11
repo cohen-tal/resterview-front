@@ -8,7 +8,7 @@ export default function BurgerMenu({ children }: { children?: ReactNode }) {
   const [isOpen, toggle] = useCycle(false, true);
 
   return (
-    <>
+    <div className="sm:hidden">
       <div className="ml-auto">
         <button
           onClick={() => {
@@ -43,6 +43,6 @@ export default function BurgerMenu({ children }: { children?: ReactNode }) {
           </div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 }
