@@ -240,7 +240,7 @@ export default function NewRestaurantForm() {
                   />
                 )}
               />
-              <SubmitFormButton submitting={isSubmitting} />
+              <SubmitFormButton submitting={isSubmitting} showText={false} />
             </motion.div>
           </form>
         </div>
