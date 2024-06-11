@@ -21,7 +21,7 @@ export default function NewRestaurantButton({
 }: NewRestaurantButtonProps) {
   return (
     <m.button
-      className={`absolute flex items-center justify-center border rounded-full bg-blue-400 text-white font-bold py-2 px-4 w-28 h-12 transition duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500 disabled:hover:border-slate-300  disabled:bg-transparent disabled:text-slate-300  shadow-sm mt-1 ${
+      className={`absolute flex items-center justify-center border rounded-full bg-blue-400 text-white font-bold py-2 px-4 transition duration-300 ease-in-out hover:bg-white hover:text-blue-500 hover:border-blue-500 disabled:hover:border-slate-300  disabled:bg-transparent disabled:text-slate-300  shadow-sm mt-1 ${
         icon === "next" ? "right-12" : "left-12"
       }`}
       type={type}
@@ -33,7 +33,6 @@ export default function NewRestaurantButton({
       disabled={disabled}
     >
       {icon === "prev" && <ArrowBackIcon />}
-      {text}
       {icon === "next" && <ArrowForwardIcon />}
     </m.button>
   );
