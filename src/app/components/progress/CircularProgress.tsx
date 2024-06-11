@@ -23,13 +23,13 @@ export default function CircularProgress({ color }: CircularProgressProps) {
   };
 
   return (
-    <motion.svg width="50" height="20" viewBox="0 0 50 20">
+    <motion.svg width="30" height="30" viewBox="xMidYMid meet">
       <motion.circle
-        cx="25"
-        cy="10"
+        cx="15"
+        cy="15"
         r={radius}
         stroke={color}
-        strokeWidth="10"
+        strokeWidth="7"
         fill="none"
         strokeDasharray={circumference}
         initial="hidden"
