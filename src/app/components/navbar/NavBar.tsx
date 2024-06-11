@@ -3,20 +3,28 @@ import { ReactNode } from "react";
 import BurgerMenu from "../menus/BurgerMenu";
 import Image from "next/image";
 import SearchBox from "./SearchBox";
+import DesktopMenu from "../menus/DesktopMenu";
 
 interface NavBarProps {
-  layout?: "mobile" | "desktop";
   children?: ReactNode;
 }
 
-export default function NavBar({ layout, children }: NavBarProps) {
+export default function NavBar({ children }: NavBarProps) {
   return (
-    <div className="flex flex-col items-center bg-transparent">
-      <div className="flex items-center justify-between w-full border p-3 z-50 mb-6">
-        {/* <Image src="/logo.png" alt="logo" width={64} height={64} /> */}
-        {/* <BurgerMenu>test test</BurgerMenu> */}
+    <nav className="sticky top-0 left-0 right-0 w-full bg-white shadow-sm z-[9999]">
+      <div className="flex items-center justify-center flex-1 gap-4 border-b h-20 p-1">
+        <Image
+          className="ml-4 mr-6 self-start"
+          src="/logo-crop.png"
+          alt="logo"
+          width={100}
+          height={20}
+          objectFit="contain"
+        />
         <SearchBox />
+        <BurgerMenu>test test</BurgerMenu>
+        <DesktopMenu />
       </div>
-    </div>
+    </nav>
   );
 }
