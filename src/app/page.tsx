@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import SearchBox from "./components/navbar/SearchBox";
 import RecentReviewsContainer from "./components/containers/RecentReviewsContainer";
 import RecentRestaurantsContainer from "./components/containers/RecentRestaurantsContainer";
 
