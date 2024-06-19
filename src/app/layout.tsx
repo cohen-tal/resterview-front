@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Poltawski_Nowy, Roboto_Mono, Anton, Roboto } from "next/font/google";
 import NavBar from "./components/navbar/NavBar";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "StarBite Reviews",
@@ -45,8 +46,10 @@ export default function RootLayout({
       className={`${poltawoski_nowy.variable} ${roboto_mono.variable} ${roboto.variable}`}
     >
       <body className="font-sans overflow-x-hidden min-h-screen">
-        <NavBar />
-        {children}
+        <SessionProvider>
+          <NavBar />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
