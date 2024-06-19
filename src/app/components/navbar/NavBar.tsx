@@ -15,11 +15,11 @@ export default function NavBar({ children }: NavBarProps) {
       <div className="flex items-center justify-center flex-1 gap-4 border-b h-20 p-1">
         <Image
           className="ml-4 mr-6 self-start"
-          src="/logo-crop.png"
+          src="/logo.png"
           alt="logo"
           width={100}
           height={20}
-          objectFit="contain"
+          style={{ objectFit: "contain" }}
         />
         <SearchBox />
         <BurgerMenu>test test</BurgerMenu>

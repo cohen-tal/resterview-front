@@ -1,4 +1,4 @@
-import React, { HTMLInputTypeAttribute } from "react";
+import { HTMLInputTypeAttribute } from "react";
 import { Control, Controller } from "react-hook-form";
 import FormInput from "../form/FormInput";
 
