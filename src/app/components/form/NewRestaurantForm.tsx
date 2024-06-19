@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Variants, motion } from "framer-motion";
 import z from "zod";
@@ -14,9 +14,9 @@ import { RestaurantFormSchema } from "@/utils/validation";
 import SubmitFormButton from "./SubmitFormButton";
 import ImageUpload from "../image-upload/ImageUpload";
 import Snackbar from "@mui/material/Snackbar";
-import SnackbarContent from "@mui/material/SnackbarContent";
 import { Alert } from "@mui/material";
-
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 const variants: Variants = {
   left: {
     x: "-100%",
@@ -33,6 +33,12 @@ const variants: Variants = {
 };
 
 export default function NewRestaurantForm() {
+  // useEffect(() => {
+  //   if (session.data?.error) {
+  //     router.push("/login");
+  //   }
+  // }, [session, router]);
+
   const {
     register,
     watch,
@@ -71,7 +77,6 @@ export default function NewRestaurantForm() {
       }
 
       const jsonResponse = await res.json();
-      console.log(jsonResponse);
     } catch (error) {
       console.error("Error submitting form:", error);
     }

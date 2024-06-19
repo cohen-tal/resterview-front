@@ -5,7 +5,7 @@ interface CircularProgressProps {
 }
 
 export default function CircularProgress({ color }: CircularProgressProps) {
-  const radius = 10;
+  const radius = 8;
   const circumference = 2 * Math.PI * radius;
 
   const variants: Variants = {
@@ -23,10 +23,10 @@ export default function CircularProgress({ color }: CircularProgressProps) {
   };
 
   return (
-    <motion.svg width="30" height="30" viewBox="xMidYMid meet">
+    <motion.svg width="24" height="24" viewBox="0 0 24 24">
       <motion.circle
-        cx="15"
-        cy="15"
+        cx="12"
+        cy="12"
         r={radius}
         stroke={color}
         strokeWidth="7"
