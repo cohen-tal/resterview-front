@@ -6,7 +6,7 @@ import { Token } from "./d";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // debug: true,
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt", updateAge: 30 * 60 },
   providers: [GitHub, Google],
   callbacks: {
     async signIn({ user }) {
@@ -56,8 +56,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null;
         }
       }
-
-      console.log(Date.now() / 1000, token.accessToken.expiresAt);
 
       if (Date.now() / 1000 >= token.accessToken.expiresAt) {
         try {
