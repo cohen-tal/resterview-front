@@ -99,7 +99,16 @@ const config: Config = {
         bottomRight: "rgb(249 253 240)",
       },
       maxHeight: {
-        "18": "5rem",
+        "18": "4.5rem",
+      },
+      maxWidth: {
+        "18": "4.5rem",
+      },
+      minHeight: {
+        "18": "4.5rem",
+      },
+      minWidth: {
+        "18": "4.5rem",
       },
       gridTemplateColumns: {
         rep: "repeat(4, 1fr)",
