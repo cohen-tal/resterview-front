@@ -1,3 +1,4 @@
+"use client";
 import { ReactNode, useState } from "react";
 import { motion, useCycle, AnimatePresence } from "framer-motion";
 import MenuIcon from "@mui/icons-material/Menu";
