@@ -29,7 +29,7 @@ export default function RestaurantCard({
 }: RestaurantCardProps) {
   return (
     <Link
-      className="flex flex-col items-center justify-center border rounded-md max-w-[390px] max-h-[440px] shadow-md hover:scale-110 ease-in-out duration-300"
+      className="flex flex-col items-center justify-center border rounded-md w-full max-h-[440px] shadow-md hover:scale-110 ease-in-out duration-300"
       href={"/"}
     >
       <div className="relative w-full h-48">
