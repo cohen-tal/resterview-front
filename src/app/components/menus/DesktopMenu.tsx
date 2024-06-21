@@ -1,30 +1,31 @@
-"use client";
-import React from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import MenuLinkItem from "./menu-items/MenuLinkItem";
+import { signIn, signOut, auth } from "../../../../auth";
+import AccountDropdownMenu from "./AccountDropdownMenu";
+import LoginButton from "../buttons/LoginButton";
 
-export default function DesktopMenu() {
-  const pathname = usePathname();
+export default async function DesktopMenu() {
+  const session = await auth();
+
+  async function handleLogin() {
+    "use server";
+    await signIn();
+  }
+
+  async function handleLogout() {
+    "use server";
+    await signOut({ redirectTo: "/" });
+  }
+
   return (
-    <div className="hidden sm:flex items-center justify-start gap-4">
-      <Link
-        className="text-light-gray font-roboto text-shadow hover:bg-gray-700 hover:text-white hover:ease-in-out duration-200 px-3 py-2 rounded-full font-medium"
-        href="/"
-      >
-        Home
-      </Link>
-      <Link
-        className="text-light-gray font-roboto text-shadow hover:bg-gray-700 hover:text-white hover:ease-in-out duration-200 px-3 py-2 rounded-full font-medium"
-        href="/restaurants"
-      >
-        Restaurants
-      </Link>
-      <a
-        href="#"
-        className="text-light-gray  font-roboto hover:bg-gray-700 hover:text-white px-3 py-2 hover:ease-in-out duration-200 rounded-full font-medium"
-      >
-        Contact
-      </a>
+    <div className="hidden sm:flex items-center gap-4">
+      <MenuLinkItem text="Home" href="/" />
+      <MenuLinkItem text="Restaurants" href="/restaurants" />
+      <MenuLinkItem text="Discover" href="/" />
+      {session ? (
+        <AccountDropdownMenu onClickLogout={handleLogout} />
+      ) : (
+        <LoginButton func={handleLogin} />
+      )}
     </div>
   );
 }

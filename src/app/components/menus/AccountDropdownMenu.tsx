@@ -1,12 +1,16 @@
+"use client";
 import { Avatar } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 import Link from "next/link";
 import Logout from "@mui/icons-material/Logout";
-import { LogoutFunc } from "../buttons/LoginButtonFuncs";
 import { m, LazyMotion, domAnimation } from "framer-motion";
 
-export default function AccountDropdownMenu() {
+export default function AccountDropdownMenu({
+  onClickLogout,
+}: {
+  onClickLogout: () => Promise<void>;
+}) {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -62,7 +66,7 @@ export default function AccountDropdownMenu() {
                 <Logout className=" text-gray-400" fontSize="medium" />
                 <button
                   onClick={() => {
-                    LogoutFunc();
+                    onClickLogout();
                   }}
                 >
                   Logout
