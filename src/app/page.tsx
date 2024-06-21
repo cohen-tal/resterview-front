@@ -17,7 +17,7 @@ export default function Home() {
           src={"/landing1.jpg"}
           alt="Landing page picture"
           layout="fill"
-          objectFit="cover"
+          style={{ objectFit: "cover" }}
           quality={100}
         />
       </div>
