@@ -16,7 +16,7 @@ export default function NavBar() {
           style={{ objectFit: "contain" }}
         />
         <SearchBox />
-        <BurgerMenu>test test</BurgerMenu>
+        <BurgerMenu />
         <DesktopMenu />
       </div>
     </nav>
