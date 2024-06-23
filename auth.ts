@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
@@ -36,6 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, account, user }) {
       if (account) {
         try {
+          console.log("in acasdasdasdjadskasdasdkasdk: ", user);
           const response = await fetch(
             "http://localhost:8080/api/v1/auth/login",
             {
@@ -47,10 +48,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           const { accessToken, refreshToken } = await response.json();
 
-          return {
+          const jwt: JWT = {
+            name: user.name,
+            email: user.email,
+            picture: user.image,
             accessToken: accessToken,
             refreshToken: refreshToken,
           };
+
+          return jwt;
         } catch (error) {
           console.log(error);
           return null;
@@ -88,6 +94,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async session({ token, session }) {
+      console.log("in sessionasdas: ", token);
       session.accessToken = token.accessToken;
       session.error = token.error;
       return session;
