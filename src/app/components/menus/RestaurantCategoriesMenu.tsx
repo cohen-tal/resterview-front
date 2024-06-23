@@ -28,22 +28,50 @@ const foodCategories = [
 ];
 
 export default function RestaurantCategoriesMenu() {
-  const [state, setState] = useState(false);
-  const container = useRef(null);
+  const [isLeftButton, setIsLeftButton] = useState(false);
+  const [isRightButton, setIsRightButton] = useState(true);
+  const container = useRef<HTMLDivElement | null>(null);
   const scroll = useScroll({
     container: container,
   });
 
   useMotionValueEvent(scroll.scrollXProgress, "change", () => {
-    if (scroll.scrollXProgress.get() >= 0.5) {
-      setState(true);
+    if (scroll.scrollXProgress.get() > 0) {
+      setIsLeftButton(true);
+    } else {
+      setIsLeftButton(false);
+    }
+
+    if (scroll.scrollXProgress.get() < 0.9999) {
+      setIsRightButton(true);
+    } else {
+      setIsRightButton(false);
     }
   });
+
+  function handleNext() {
+    if (container.current) {
+      container.current.scrollBy({
+        left: 300,
+        behavior: "smooth",
+      });
+    }
+  }
+  function handlePrev() {
+    if (container.current) {
+      container.current.scrollBy({
+        left: -300,
+        behavior: "smooth",
+      });
+    }
+  }
 
   return (
     <div className="flex justify-start items-center pl-6 pr-6 md:pl-16 md:pr-16 pt-4 pb-4 gap-4 w-full">
       <div className="relative overflow-hidden w-full">
-        {state && <SliderNextPrevButton direction={"prev"} />}
+        {isLeftButton && (
+          <SliderNextPrevButton direction={"prev"} onClick={handlePrev} />
+        )}
         <div
           ref={container}
           className="min-h-18 max-h-20 overflow-x-auto scrollbar-hidden"
@@ -61,7 +89,9 @@ export default function RestaurantCategoriesMenu() {
             ))}
           </div>
         </div>
-        <SliderNextPrevButton direction={"next"} />
+        {isRightButton && (
+          <SliderNextPrevButton direction={"next"} onClick={handleNext} />
+        )}
       </div>
       <CategoriesFilterButton />
     </div>
