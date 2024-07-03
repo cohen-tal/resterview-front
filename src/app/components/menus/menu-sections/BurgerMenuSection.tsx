@@ -10,11 +10,11 @@ export default function BurgerMenuSection({
   children,
 }: BurgerMenuSectionProps) {
   return (
-    <div className="w-full border-b">
-      <p className="pl-4 text-xl font-roboto font-medium text-light-gray">
+    <div>
+      <p className="pl-2 mb-4 text-3xl font-figtree font-semibold text-light-gray">
         {sectionTitle}
       </p>
-      <div className="p-1">{children}</div>
+      <div className="flex flex-col gap-2 mb-2 p-1">{children}</div>
     </div>
   );
 }
