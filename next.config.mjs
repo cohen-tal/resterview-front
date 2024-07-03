@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: "img.icons8.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+      },
     ],
   },
 };

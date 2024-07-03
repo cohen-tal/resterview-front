@@ -118,7 +118,7 @@ const config: Config = {
       "sedan-sc": ["Sedan SC", "serif"],
       "poltawoski-nowy": ["var(--font-poltawoski-nowy)"],
       "roboto-mono": ["var(--font-roboto-mono)"],
-      anton: ["var(--font-anton)"],
+      figtree: ["var(--font-figtree)"],
       roboto: ["var(--font-roboto)"],
     },
   },
