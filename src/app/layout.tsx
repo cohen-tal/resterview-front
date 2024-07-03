@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Poltawski_Nowy, Roboto_Mono, Anton, Roboto } from "next/font/google";
+import { Poltawski_Nowy, Roboto_Mono, Roboto, Figtree } from "next/font/google";
 import NavBar from "./components/navbar/NavBar";
 import { SessionProvider } from "next-auth/react";
 
@@ -26,14 +26,12 @@ const roboto_mono = Roboto_Mono({
   variable: "--font-roboto-mono",
 });
 
-const anton = Anton({
+const figtree = Figtree({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
-  variable: "--font-anton",
+  variable: "--font-figtree",
 });
-
-//bg-gradient-to-br from-topLeft via-bottomLeft to-bottomRight
 
 export default function RootLayout({
   children,
@@ -43,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poltawoski_nowy.variable} ${roboto_mono.variable} ${roboto.variable}`}
+      className={`${poltawoski_nowy.variable} ${roboto_mono.variable} ${roboto.variable} ${figtree.variable}`}
     >
       <body className="font-sans overflow-x-hidden min-h-screen">
         <SessionProvider>
