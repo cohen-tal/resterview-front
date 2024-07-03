@@ -35,3 +35,11 @@ export const RestaurantFormSchema = z.object({
   lng: z.number(),
   images: z.array(ImageFileSchema).optional(),
 });
+
+export const ReviewSchema = z.object({
+  review: z.string().max(255, "Max length is 255 characters.").optional(),
+  rating: z
+    .number()
+    .min(0.5, "Minimun star rating is 0.5 stars.")
+    .max(5, "Maximum star rating is 5 stars."),
+});
