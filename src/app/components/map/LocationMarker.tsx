@@ -9,6 +9,7 @@ interface MarkerProps {
   onDrag?: (lat: number, lng: number) => void;
   position: [number, number];
   draggable?: boolean;
+  flyTo?: boolean;
 }
 
 export default function LocationMarker({
@@ -17,6 +18,7 @@ export default function LocationMarker({
   draggable = false,
   position,
   onDrag,
+  flyTo = false,
 }: MarkerProps) {
   const [userPosition, setUserPosition] = useState<[number, number]>(position);
   const map = useMap();
@@ -40,7 +42,9 @@ export default function LocationMarker({
     } else {
       const [lat, lng] = position;
       setUserPosition([lat, lng]);
-      map.flyTo(new LatLng(lat, lng), map.getZoom());
+      if (flyTo) {
+        map.flyTo(new LatLng(lat, lng), map.getZoom());
+      }
     }
   }, [map, position, setUserPosition]);
 

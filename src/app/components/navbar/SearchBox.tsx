@@ -7,20 +7,20 @@ interface SearchBoxProps {
 }
 
 export default function SearchBox({
-  placeholder = "Search restaurants...",
+  placeholder = "Search restaurants",
   onChange,
   onSelect,
 }: SearchBoxProps) {
   return (
-    <div className="relative flex flex-col border items-center min-w-48 w-96 lg:w-[40%] rounded-md">
-      <div className="flex items-center shadow-inner w-full rounded-md h-12 lg:shadow-lg">
+    <div className="relative flex flex-col border items-center min-w-48 w-54 lg:w-[40%] lg:rounded-md rounded-full">
+      <div className="flex items-center shadow-inner w-full lg:rounded-md rounded-full h-12 lg:shadow-lg">
         <input
-          className="text-gray-600 w-full p-2 h-full text-lg focus:outline-none rounded-md border-none"
+          className="text-gray-600 w-full p-2 h-full text-lg focus:outline-none lg:rounded-md rounded-full border-none"
           placeholder={placeholder}
           onChange={onChange}
           onSelect={onSelect}
         />
-        <button className="bg-[#20262f] p-3 rounded-r-md h-full flex items-center justify-center">
+        <button className="bg-[#20262f] p-3 rounded-r-full lg:rounded-r-md h-full flex items-center justify-center">
           <SearchIcon className="text-white" />
         </button>
       </div>

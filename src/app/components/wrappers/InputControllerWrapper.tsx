@@ -1,12 +1,12 @@
 import { HTMLInputTypeAttribute } from "react";
 import { Control, Controller } from "react-hook-form";
-import FormInput from "../form/FormInput";
+import FormInput from "../forms/FormInput";
 
 interface InputControllerProps {
   name: string;
   type: HTMLInputTypeAttribute;
   placeholder: string;
-  index: number;
+  index?: number;
   control: Control<any>;
   isTextArea?: boolean;
 }

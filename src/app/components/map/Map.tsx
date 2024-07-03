@@ -5,6 +5,9 @@ import "leaflet/dist/leaflet.css";
 import { ReactNode, useState } from "react";
 
 interface MapProps {
+  width?: number | string;
+  height?: number | string;
+  center?: [number, number];
   markerTitle?: string;
   markerContent?: string;
   children?: ReactNode;
@@ -12,6 +15,9 @@ interface MapProps {
 }
 
 export default function Map({
+  width = "100",
+  height = 256,
+  center = [32.109333, 34.855499],
   markerTitle = "",
   markerContent,
   onMarkerDrag,
@@ -21,12 +27,13 @@ export default function Map({
   return (
     <div>
       <MapContainer
-        center={[32.109333, 34.855499]}
+        center={center}
         zoom={15}
+        maxZoom={18}
         scrollWheelZoom={true}
         style={{
-          width: "100%",
-          height: 256,
+          width,
+          height,
           border: "1px solid black",
           maxWidth: "100%",
         }}

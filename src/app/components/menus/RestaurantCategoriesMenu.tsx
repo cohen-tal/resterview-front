@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import CategoriesMenuItem from "./menu-items/CategoriesMenuItem";
 import CategoriesFilterButton from "../buttons/CategoriesFilterButton";
 import SliderNextPrevButton from "../buttons/SliderNextPrevButton";
@@ -67,7 +67,7 @@ export default function RestaurantCategoriesMenu() {
   }
 
   return (
-    <div className="flex justify-start items-center pl-6 pr-6 md:pl-16 md:pr-16 pt-4 pb-4 gap-4 w-full">
+    <div className="flex justify-start items-center pl-2 pr-2 md:pl-16 md:pr-16 pt-4 pb-4 gap-4 w-full">
       <div className="relative overflow-hidden w-full">
         {isLeftButton && (
           <SliderNextPrevButton direction={"prev"} onClick={handlePrev} />
