@@ -15,7 +15,7 @@ export default function SortReviewsButton({
 }: SortReviewsButtonProps) {
   return (
     <button
-      className={`text-light-gray flex items-center justify-center border p-3 gap-2 rounded-3xl text-sm hover:text-white hover:bg-gray-600 duration-150 ${
+      className={`text-light-gray flex items-center text-nowrap justify-center border p-3 gap-2 rounded-3xl text-sm hover:text-white hover:bg-gray-500 duration-150 ${
         selected ? "border bg-gray-600 text-white" : ""
       }`}
       onClick={() => {

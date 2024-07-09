@@ -7,7 +7,7 @@ export default function FilterMenuSection({
   children,
 }: FilterMenuSectionProps) {
   return (
-    <div className="after:border-b after:block after:mt-2">
+    <div className="before:border-b before:block overflow-hidden">
       <div className="p-6">
         <div className="text-2xl font-semibold text-light-gray">
           {sectionTitle}
