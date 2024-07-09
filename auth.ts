@@ -6,7 +6,7 @@ import { Token } from "./d";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // debug: true,
-  session: { strategy: "jwt", updateAge: 30 * 60 },
+  session: { strategy: "jwt", updateAge: 60 * 30 },
   providers: [GitHub, Google],
   callbacks: {
     async signIn({ user }) {
@@ -36,7 +36,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, account, user }) {
       if (account) {
         try {
-          console.log("in acasdasdasdjadskasdasdkasdk: ", user);
           const response = await fetch(
             "http://localhost:8080/api/v1/auth/login",
             {
@@ -74,8 +73,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
           );
 
-          console.log("status code: ", response.status);
-
           if (!response.ok) {
             console.log("error refreshing");
             throw Error("RefreshAccessTokenError");
@@ -94,7 +91,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async session({ token, session }) {
-      console.log("in sessionasdas: ", token);
       session.accessToken = token.accessToken;
       session.error = token.error;
       return session;
