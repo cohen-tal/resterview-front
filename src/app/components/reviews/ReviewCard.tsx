@@ -1,8 +1,14 @@
 import Image from "next/image";
 import StarRatingInput from "../rating/StarRatingInput";
 import StarInput from "../rating/StarInput";
+import { Review, User } from "../../../../d";
 
-export default function Review() {
+interface ReviewCardProps {
+  author: User;
+  review: Review;
+}
+
+export default function ReviewCard() {
   return (
     <div className="relative flex flex-col items-center justify-center h-52 w-full rounded-2xl shadow-lg">
       <div className="absolute rounded-full -top-6 w-16 h-16 overflow-hidden shadow-md">
