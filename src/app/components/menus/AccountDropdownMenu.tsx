@@ -6,11 +6,16 @@ import Link from "next/link";
 import Logout from "@mui/icons-material/Logout";
 import { m, LazyMotion, domAnimation } from "framer-motion";
 import Image from "next/image";
-export default function AccountDropdownMenu({
-  onClickLogout,
-}: {
+
+interface AccountDropdownMenuProps {
+  userName: string;
   onClickLogout: () => Promise<void>;
-}) {
+}
+
+export default function AccountDropdownMenu({
+  userName,
+  onClickLogout,
+}: AccountDropdownMenuProps) {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -20,7 +25,7 @@ export default function AccountDropdownMenu({
     >
       <Avatar src="/landing5.png" alt="avatar" sx={{ width: 28, height: 28 }} />
       <div className="text-light-gray font-roboto text-shadow text-sm">
-        Account Name
+        {userName}
       </div>
       <LazyMotion features={domAnimation}>
         <m.div

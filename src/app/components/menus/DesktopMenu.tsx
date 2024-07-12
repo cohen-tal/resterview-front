@@ -22,7 +22,10 @@ export default async function DesktopMenu() {
       <MenuLinkItem text="Restaurants" href="/restaurants" />
       <MenuLinkItem text="Discover" href="/" />
       {session ? (
-        <AccountDropdownMenu onClickLogout={handleLogout} />
+        <AccountDropdownMenu
+          onClickLogout={handleLogout}
+          userName={session.user?.name!}
+        />
       ) : (
         <LoginButton func={handleLogin} />
       )}
