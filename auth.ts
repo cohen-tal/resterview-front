@@ -27,6 +27,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const parsedRes = await res.json();
         user.id = parsedRes.id;
+        user.name = parsedRes.name;
+        user.email = parsedRes.email;
+        user.image = parsedRes.image;
 
         return true;
       } catch (err) {
