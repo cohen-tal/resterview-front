@@ -81,8 +81,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             throw Error("RefreshAccessTokenError");
           }
 
-          const parsedRes = await response.json();
-          token.accessToken = parsedRes.accessToken;
+          const newToken: Token = await response.json();
+          token.accessToken = newToken;
         } catch (error) {
           if (error instanceof Error) {
             if (error.message === "RefreshAccessTokenError")
