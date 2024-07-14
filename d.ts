@@ -4,6 +4,16 @@ export interface User {
   image: string;
 }
 
+export interface Restaurant {
+  id: string;
+  name: string;
+  description: string;
+  rating: number;
+  address: string;
+  lat: number;
+  lng: number;
+}
+
 export interface Review {
   id: string;
   rating: string;
