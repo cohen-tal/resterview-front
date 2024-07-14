@@ -33,6 +33,7 @@ export const RestaurantFormSchema = z.object({
     .max(255, "Max length is 255 characters."),
   lat: z.number(),
   lng: z.number(),
+  categories: z.array(z.string()),
   images: z.array(ImageFileSchema).optional(),
 });
 
