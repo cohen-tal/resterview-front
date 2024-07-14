@@ -21,9 +21,9 @@ export default function ImageUpload({
   }
 
   return (
-    <div className="flex flex-col items-center h-full">
+    <div className="flex flex-col items-center w-full p-4">
       <div
-        className="flex flex-col items-center justify-center mt-4 w-[90%] border border-dashed hover:cursor-pointer transition-all duration-300 flex-1"
+        className="flex flex-col items-center justify-center w-full border border-dashed hover:cursor-pointer transition-all duration-300 flex-1"
         onClick={() => ref.current?.click()}
       >
         <UploadFileIcon fontSize="large" />
@@ -43,7 +43,7 @@ export default function ImageUpload({
         ref={ref}
         onChange={handleUpload}
       />
-      <div className="flex-1 w-full grid gap-4 p-4 grid-cols-3 justify-items-center">
+      <div className="flex-1 w-full grid gap-4 p-3 grid-cols-3 justify-items-center">
         {value.map((image, index) => (
           <PreviewImage
             key={image.name}

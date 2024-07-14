@@ -14,7 +14,7 @@ function PreviewImage({ image, size, onDelete }: PreviewImageProps) {
   return (
     <motion.div
       className={`flex flex-col items-center justify-center w-28 lg:w-full h-32 border-4 ${
-        size > 3000000 ? "border-red-600" : ""
+        size > 5000000 ? "border-red-600" : ""
       } shadow`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 1, ease: "easeIn" } }}
