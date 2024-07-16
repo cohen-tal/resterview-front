@@ -34,7 +34,7 @@ export default function InputControllerWrapper({
             error={fieldState.error?.message}
             valid={
               fieldState.isDirty
-                ? fieldState.error && fieldState.invalid
+                ? fieldState.invalid
                   ? false
                   : true
                 : undefined
