@@ -15,7 +15,7 @@ export default function FilterMenu({
   return (
     <AnimatePresence>
       {open && (
-        <div className="absolute top-0 w-full h-full bg-black/60">
+        <div className="absolute inset-0 bg-black/60">
           <LazyMotion features={domAnimation}>
             <m.div
               style={{ translateX: "-50%", translateY: "-50%" }}
