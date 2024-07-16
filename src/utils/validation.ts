@@ -24,21 +24,24 @@ const ImageFileSchema = z
 export const RestaurantFormSchema = z.object({
   name: z
     .string()
-    .min(2, "Must be a minimum length of 2.")
-    .max(100, "Max length is 100 characters."),
+    .min(2, "Name must contain at least 2 characters.")
+    .max(100, "Name max length is 100 characters."),
   description: z.string().max(255, "Max length is 255 characters.").optional(),
   address: z
     .string()
-    .min(2, "Min length is 2 characters.")
-    .max(255, "Max length is 255 characters."),
+    .min(2, "Address must contain at least 2 characters.")
+    .max(255, "Address max length is 255 characters."),
   lat: z.number(),
   lng: z.number(),
-  categories: z.array(z.string()),
+  categories: z.array(z.string()).min(1).max(5),
   images: z.array(ImageFileSchema).optional(),
 });
 
 export const ReviewSchema = z.object({
-  review: z.string().max(255, "Max length is 255 characters.").optional(),
+  review: z
+    .string()
+    .max(255, "Review max length is 255 characters.")
+    .optional(),
   rating: z
     .number()
     .min(0.5, "Minimun star rating is 0.5 stars.")
