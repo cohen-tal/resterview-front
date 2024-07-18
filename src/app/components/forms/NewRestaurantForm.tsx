@@ -15,6 +15,9 @@ import SubmitFormButton from "./SubmitFormButton";
 import ImageUpload from "../image-upload/ImageUpload";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
+import { useSession } from "next-auth/react";
+import CategoriesPickerMenu from "../menus/CategoriesPickerMenu";
+import { useRouter } from "next/navigation";
 
 const variants: Variants = {
   left: {
@@ -32,6 +35,7 @@ const variants: Variants = {
 };
 
 export default function NewRestaurantForm() {
+  const { data: session } = useSession();
   const {
     register,
     watch,
@@ -49,6 +53,7 @@ export default function NewRestaurantForm() {
       address: "",
       lat: 0,
       lng: 0,
+      categories: [],
     },
   });
 
@@ -56,12 +61,27 @@ export default function NewRestaurantForm() {
     data
   ) => {
     try {
+      const formData = new FormData();
+
+      formData.append("name", data.name);
+      formData.append("address", data.address);
+      formData.append("lat", String(data.lat));
+      formData.append("lng", String(data.lng));
+
+      data.images?.forEach((image) => {
+        formData.append("images", image);
+      });
+
+      data.categories.forEach((category) =>
+        formData.append("categories", category)
+      );
+
       const res = await fetch("http://localhost:8080/api/v1/restaurants", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.accessToken?.token}`,
         },
-        body: JSON.stringify(data),
+        body: formData,
       });
 
       if (!res.ok) {
@@ -70,11 +90,13 @@ export default function NewRestaurantForm() {
       }
 
       const jsonResponse = await res.json();
+      router.push(`/restaurants/${jsonResponse.id}`);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
 
+  const router = useRouter();
   const [step, setStep] = useState<string>("step1");
   const [direction, setDirection] = useState<string[]>([
     "center",
@@ -140,13 +162,33 @@ export default function NewRestaurantForm() {
                 index={1}
                 control={control}
               />
-              <InputControllerWrapper
+
+              {/* <InputControllerWrapper
                 name="description"
                 type="text"
                 placeholder="Description"
                 index={2}
                 control={control}
                 isTextArea
+              /> */}
+              {/* <FoodCategoriesInput></FoodCategoriesInput> */}
+              <Controller
+                name="categories"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <CategoriesPickerMenu
+                    index={2}
+                    valid={fieldState.isDirty ? !fieldState.invalid : undefined}
+                    onSelect={(value) => {
+                      field.onChange([...field.value, value]);
+                    }}
+                    onDelete={(value) => {
+                      field.onChange(
+                        field.value.filter((val) => val !== value)
+                      );
+                    }}
+                  />
+                )}
               />
               <NewRestaurantButton
                 type={"button"}
@@ -155,7 +197,11 @@ export default function NewRestaurantForm() {
                 icon="next"
                 onClick={handleSubmitStep1}
                 disabled={
-                  errors.name || errors.description || watch("name") === ""
+                  errors.name ||
+                  errors.description ||
+                  watch("name") === "" ||
+                  errors.categories ||
+                  watch("categories").length === 0
                     ? true
                     : false
                 }
