@@ -100,7 +100,7 @@ export default function StarRatingInput({
     <StyledRating
       name="hover-feedback"
       value={value}
-      precision={0.5}
+      precision={1}
       onChange={(event, newValue) => {
         setValue(newValue ?? 0);
         getValue?.(newValue ?? 0);

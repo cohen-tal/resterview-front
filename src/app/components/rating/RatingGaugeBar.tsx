@@ -19,14 +19,11 @@ export default function RatingGaugeBar({
   };
 
   return (
-    <div className="flex items-center justify-end gap-4 font-figtree whitespace-nowrap">
-      {text}
-      <div className="w-[65%] lg:w-[85%] h-4 bg-gray-200 rounded-full">
-        <div
-          style={{ width }}
-          className={`h-full rounded-full ${colors[color]}`}
-        />
-      </div>
+    <div className="w-full h-3 bg-gray-200 rounded-full">
+      <div
+        style={{ width }}
+        className={`h-full rounded-full ${colors[color]}`}
+      />
     </div>
   );
 }
