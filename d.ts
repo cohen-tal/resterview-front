@@ -4,14 +4,9 @@ export interface User {
   image: string;
 }
 
-export interface Restaurant {
-  id: string;
-  name: string;
-  description: string;
-  rating: number;
-  address: string;
-  lat: number;
-  lng: number;
+export interface Restaurant extends RestaurantAPI {
+  description?: string;
+  ratingPercentages: number[] | [number, number, number, number, number];
 }
 
 export interface Review {
@@ -34,6 +29,30 @@ export interface Location {
   displayName: string;
   lat: number;
   lon: number;
+}
+
+export interface RestaurantAPI {
+  id: string;
+  name: string;
+  address: string;
+  lat: number;
+  lng: number;
+  rating: number;
+  addedBy: User;
+  images: string[];
+  reviews: ReviewAPI[];
+  categories: string[];
+  dateAdded: Date;
+  dateEdited: Date | null;
+}
+
+export interface ReviewAPI {
+  id: string;
+  text: string;
+  rating: number;
+  author: User;
+  dateAdded: Date;
+  dateEdited: Date | null;
 }
 
 export interface Token {
