@@ -22,15 +22,15 @@ import { useRouter } from "next/navigation";
 const variants: Variants = {
   left: {
     x: "-100%",
-    transition: { ease: "linear", duration: 0.5 },
+    transition: { ease: "linear", duration: 0.3 },
   },
   center: {
     x: 0,
-    transition: { ease: "linear", duration: 0.5 },
+    transition: { ease: "linear", duration: 0.3 },
   },
   right: {
     x: "100%",
-    transition: { ease: "linear", duration: 0.5 },
+    transition: { ease: "linear", duration: 0.3 },
   },
 };
 
@@ -153,7 +153,7 @@ export default function NewRestaurantForm() {
               initial="center"
               animate={direction[0]}
               variants={variants}
-              className="absolute w-full"
+              className="absolute w-full h-full"
             >
               <InputControllerWrapper
                 name="name"
