@@ -16,6 +16,7 @@ export default function NavBar() {
             width={100}
             height={20}
             style={{ objectFit: "contain" }}
+            priority={true}
           />
         </Link>
         <SearchBox />
