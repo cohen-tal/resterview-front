@@ -1,19 +1,27 @@
 "use client";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import StarRatingInput from "../rating/StarRatingInput";
 import z from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ReviewSchema } from "@/utils/validation";
 import InputControllerWrapper from "../wrappers/InputControllerWrapper";
 import SubmitFormButton from "./SubmitFormButton";
 import { useSession } from "next-auth/react";
+import ImageUpload from "../image-upload/ImageUpload";
+import { useParams, useRouter } from "next/navigation";
+import Alert from "@mui/material/Alert/Alert";
+import Snackbar from "@mui/material/Snackbar/Snackbar";
 
 export default function NewReviewForm() {
   const { data: session } = useSession();
+  const [submitSuccessful, setSubmitSuccessful] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+  const { restaurantId } = useParams();
+  const router = useRouter();
+
   const {
     register,
-    watch,
-    clearErrors,
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting, isSubmitSuccessful },
@@ -26,50 +34,99 @@ export default function NewReviewForm() {
   const onSubmit: SubmitHandler<z.infer<typeof ReviewSchema>> = async (
     data
   ) => {
-    console.log(data);
-    // try {
-    //   const res = await fetch("http://localhost:8080/api/v1/restaurants", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   });
+    const formData = new FormData();
+    formData.append("review", data.review ?? "");
+    formData.append("rating", data.rating.toString());
+    formData.append("restaurantId", restaurantId as string);
 
-    //   if (!res.ok) {
-    //     // Handle HTTP errors
-    //     throw new Error(`HTTP error! status: ${res.status}`);
-    //   }
+    if (data.images) {
+      for (let i = 0; i < data.images.length; i++) {
+        formData.append("images", data.images[i]);
+      }
+    }
 
-    //   const jsonResponse = await res.json();
-    // } catch (error) {
-    //   console.error("Error submitting form:", error);
-    // }
+    try {
+      const res = await fetch(`http://localhost:8080/api/v1/reviews`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${session?.accessToken?.token}`,
+        },
+        body: formData,
+      });
+
+      if (!res.ok) {
+        // Handle HTTP errors
+        throw new Error(res.statusText);
+      }
+      setSubmitSuccessful(true);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitError(true);
+    }
   };
 
   return (
-    <form
-      className="flex flex-col items-center justify-center p-1"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <input type="hidden" {...register("rating")} />
-      <StarRatingInput
-        rating="stars"
-        fontSize="3.5rem"
-        defaultValue={0}
-        getValue={(value) => {
-          setValue("rating", value);
-          console.log(value);
+    <>
+      <form
+        className="flex flex-col items-center justify-center gap-2 w-full h-fit border rounded-lg shadow-md p-8"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <input type="hidden" {...register("rating")} />
+        <StarRatingInput
+          ratingType="stars"
+          fontSize="3.5rem"
+          defaultValue={0}
+          getValue={(value) => {
+            setValue("rating", value);
+            console.log(value);
+          }}
+        />
+        <InputControllerWrapper
+          control={control}
+          name="review"
+          placeholder="Write a review"
+          isTextArea
+          type="text"
+        />
+        <Controller
+          name="images"
+          control={control}
+          render={({ field, fieldState }) => (
+            <ImageUpload
+              value={field.value}
+              onChange={field.onChange}
+              error={fieldState.error?.message}
+            />
+          )}
+        />
+        <SubmitFormButton />
+      </form>
+
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={submitSuccessful}
+        autoHideDuration={2000}
+        onClose={() => {
+          router.push(`/reviews/${restaurantId}`);
         }}
-      />
-      <InputControllerWrapper
-        control={control}
-        name="review"
-        placeholder="Write a review"
-        isTextArea
-        type="text"
-      />
-      <SubmitFormButton />
-    </form>
+      >
+        <Alert severity="success" variant="filled" sx={{ width: "100%" }}>
+          Restaurant added successfully!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={submitError}
+        autoHideDuration={2000}
+        onClose={() => {
+          setSubmitError(false);
+        }}
+      >
+        <Alert severity="error" sx={{ width: "100%" }}>
+          Error submitting review, please try again shortly.
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
