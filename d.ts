@@ -9,18 +9,30 @@ export interface Restaurant extends RestaurantAPI {
   ratingPercentages: number[] | [number, number, number, number, number];
 }
 
+export interface RestaurantCard
+  extends Omit<
+    RestaurantAPI,
+    "lat" | "lng" | "addedBy" | "reviews" | "dateAdded" | "dateEdited"
+  > {}
+
 export interface Review {
   id: string;
   rating: string;
+  likes?: number;
+  dislikes?: number;
   text: string;
 }
 
-export interface RecentRestaurantCardData {
+export interface RecentReview
+  extends Omit<ReviewAPI, "images" | "dateEdited" | "likes" | "dislikes"> {}
+
+export interface RecentRestaurant {
   name: string;
   address: string;
-  rating: string;
-  image: string;
-  description: string;
+  rating: number;
+  images: string[];
+  categories: string[];
+  description?: string;
 }
 
 export interface Location {
@@ -42,17 +54,20 @@ export interface RestaurantAPI {
   images: string[];
   reviews: ReviewAPI[];
   categories: string[];
-  dateAdded: Date;
-  dateEdited: Date | null;
+  dateAdded: string | Date;
+  dateEdited: string | Date | null;
 }
 
 export interface ReviewAPI {
   id: string;
   text: string;
   rating: number;
+  likes?: number;
+  dislikes?: number;
+  images?: string[];
   author: User;
-  dateAdded: Date;
-  dateEdited: Date | null;
+  dateAdded: string | Date;
+  dateEdited: string | Date | null;
 }
 
 export interface Token {
