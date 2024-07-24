@@ -59,8 +59,9 @@ function IconContainerPrice({ value, ...props }: { value: number }) {
 }
 
 interface StarRatingInputProps {
-  rating: "stars" | "price";
+  ratingType: "stars" | "price";
   readOnly?: boolean;
+  precision?: number;
   defaultValue?: number;
   size?: "small" | "medium" | "large";
   fontSize?: string;
@@ -68,8 +69,9 @@ interface StarRatingInputProps {
 }
 
 export default function StarRatingInput({
-  rating,
+  ratingType: rating,
   readOnly = false,
+  precision = 1,
   defaultValue = 0,
   size = "medium",
   fontSize,
@@ -100,7 +102,7 @@ export default function StarRatingInput({
     <StyledRating
       name="hover-feedback"
       value={value}
-      precision={1}
+      precision={precision}
       onChange={(event, newValue) => {
         setValue(newValue ?? 0);
         getValue?.(newValue ?? 0);
