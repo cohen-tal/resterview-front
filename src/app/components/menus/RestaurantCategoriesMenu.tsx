@@ -3,7 +3,6 @@ import CategoriesMenuItem from "./menu-items/CategoriesMenuItem";
 import CategoriesFilterButton from "../buttons/CategoriesFilterButton";
 import SliderNextPrevButton from "../buttons/SliderNextPrevButton";
 import { useMotionValueEvent, useScroll } from "framer-motion";
-import { RestaurantCard } from "../../../../d";
 
 const categories: string[][] = [
   ["Pizza", "https://img.icons8.com/ios/100/pizza.png"],
