@@ -2,79 +2,161 @@
 import RatingsChart from "@/app/components/rating/RatingsChart";
 import Map from "@/app/components/map/Map";
 import LocationMarker from "@/app/components/map/LocationMarker";
-import Review from "@/app/components/reviews/Review";
+import ReviewCard from "@/app/components/reviews/ReviewCard";
 import SwiperSliderContainer from "@/app/components/containers/SwiperSliderContainer";
 import Image from "next/image";
 import { SwiperSlide } from "swiper/react";
+import { useEffect, useState } from "react";
+import AllReviewsContainer from "@/app/components/containers/AllReviewsContainer";
+import StarRatingInput from "@/app/components/rating/StarRatingInput";
+import { Restaurant, RestaurantAPI, ReviewAPI } from "../../../../d";
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
-function renderImages() {
-  const arr = Array(5)
-    .fill(1)
-    .map((_, index) => {
-      return (
-        <SwiperSlide key={index}>
-          <Image
-            src="/stubimage.png"
-            alt="image"
-            fill
-            style={{ objectFit: "cover" }}
-          />
-        </SwiperSlide>
-      );
-    });
-  return arr;
+async function fetchRestaurant(id: string, token: string): Promise<Restaurant> {
+  const res = await fetch(`http://localhost:8080/api/v1/restaurants/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const restaurantApi: RestaurantAPI = await res.json();
+
+  if (!res.ok) {
+    throw new Error("fetch errror");
+  }
+
+  /* TODO: add parsing method that will parse the dates and nested dates from string to date objects.
+  Currently components using Restaurant as prop convert the string to new Date */
+  const restaurant: Restaurant = {
+    ...restaurantApi,
+    ratingPercentages: getRatingPercentages(restaurantApi.reviews),
+  };
+
+  return restaurant;
+}
+
+function getRatingPercentages(reviews: ReviewAPI[]): number[] {
+  const result = new Array(5).fill(0);
+
+  if (reviews.length === 0) {
+    // avoid division by 0
+    return result;
+  }
+
+  reviews.forEach((review) => result[review.rating - 1]++);
+
+  return result.map((ratingsCount) => ratingsCount / reviews.length);
 }
 
 export default function RestaurantPage() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [restaurant, setRestaurant] = useState<Restaurant>();
+  const { id } = useParams();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const restaurantId: string = id as string;
+    if (session?.accessToken) {
+      fetchRestaurant(restaurantId, session.accessToken.token)
+        .then((res) => setRestaurant(res))
+        .catch((reason) => console.log(reason));
+    }
+  }, [id, session]);
+
+  if (!restaurant) {
+    return <div>Error loading restaurant</div>;
+  }
+
+  function renderImages() {
+    return restaurant?.images.map((image, index) => (
+      <SwiperSlide key={index}>
+        <Image src={image} alt="image" fill style={{ objectFit: "cover" }} />
+      </SwiperSlide>
+    ));
+  }
+
   return (
     <>
-      <SwiperSliderContainer>{renderImages()}</SwiperSliderContainer>
+      <div className="w-full h-[320px] 2xl:h-[500px] lg:h-[380px]">
+        <SwiperSliderContainer>{renderImages()}</SwiperSliderContainer>
+      </div>
       <div className="lg:p-40 2xl:p-80 2xl:pt-4 lg:pt-4">
         <div className="flex flex-col font-figtree self-center justify-center gap-2 p-6 pt-0 lg:p-0">
           <div className="pt-6 pb-6">
             <h2 className="text-4xl lg:text-7xl text-light-gray font-bold mb-4">
-              Restaurant Title
+              {restaurant.name}
             </h2>
             <h2 className="text-xl flex items-center pl-0.5 text-light-gray/90">
-              Restaurant Address
+              {restaurant.address}
             </h2>
           </div>
           <div className="w-full border-t pb-5 pt-8">
-            <RatingsChart />
+            <RatingsChart
+              key={"ratings-chart-main"}
+              amountOfReviews={restaurant.reviews.length}
+              overallRating={restaurant.rating}
+              ratingsPercentage={restaurant.ratingPercentages}
+            />
           </div>
 
           <div className="w-full pb-5 pt-5 border-t">
             <h2 className="text-2xl font-semibold flex items-center text-light-gray mb-3">
               Location
             </h2>
-            <Map center={[32.78670209480405, 34.998893182974044]} height={320}>
+            <Map center={[restaurant.lat, restaurant.lng]} height={320}>
               <LocationMarker
                 title={"Restaurant Name"}
                 content={"Restaurant Address"}
-                position={[32.78670209480405, 34.998893182974044]}
+                position={[restaurant.lat, restaurant.lng]}
               />
             </Map>
           </div>
           <div className="flex flex-col w-full border-t pt-6 gap-10">
-            <div className="flex flex-col justify-between lg:flex-row">
+            <div className="w-fit grid grid-cols-1">
               <h2 className="text-2xl font-semibold flex items-center text-light-gray mb-3">
                 Recommended Reviews
               </h2>
-              {/* <button className="w-1/2 p-2 whitespace-nowrap lg:p-1 border rounded-lg font-figtree shadow-md bg-gradient-to-br from-floral_white/50 to-floral_white/20 hover:scale-105 duration-300 hover:from-floral_white/80 hover:to-floral_white/50">
+              <Link
+                href={`/reviews/writereview/${restaurant.id}`}
+                className="flex place-items-center p-4 pr-0 gap-3 border rounded-lg font-figtree shadow-md text-md text-blue-600"
+              >
                 Write a review
-              </button> */}
+                <StarRatingInput ratingType="stars" readOnly={false} />
+              </Link>
             </div>
             <div className="flex flex-col gap-16 lg:grid lg:grid-cols-2 lg:gap-14">
-              <Review />
-              <Review />
-              <Review />
-              <Review />
+              {restaurant.reviews.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))}
             </div>
-            <button className="p-1 border rounded-lg w-full bg-gradient-to-br from-floral_white/50 to-floral_white/20 shadow-md hover:scale-105 duration-300">
+            <button
+              className="p-1 border rounded-lg w-full shadow-md hover:scale-105 md:hover:bg-slate-600 hover:text-white duration-300"
+              onClick={() => {
+                document.body.style.overflow = "hidden";
+                setIsOpen(true);
+              }}
+            >
               See all reviews
             </button>
           </div>
         </div>
+        {restaurant && (
+          <AllReviewsContainer
+            restaurant={{
+              id: restaurant.id,
+              name: restaurant.name,
+              rating: restaurant.rating,
+              reviews: restaurant.reviews,
+              ratingPercentages: restaurant.ratingPercentages,
+            }}
+            isOpen={isOpen}
+            onClose={() => {
+              setIsOpen(false);
+              document.body.style.overflow = "auto";
+            }}
+          />
+        )}
       </div>
     </>
   );
