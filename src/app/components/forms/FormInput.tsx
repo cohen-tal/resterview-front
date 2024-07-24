@@ -74,7 +74,11 @@ function FormInput(
           />
         )}
       </div>
-      {error && <p className="text-sm text-red-400 pl-12">{error}</p>}
+      {error && (
+        <p className="absolute top-[85%] left-12 text-sm text-red-400">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
