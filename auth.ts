@@ -1,11 +1,10 @@
-import NextAuth, { User } from "next-auth";
+import NextAuth from "next-auth";
 import { JWT } from "next-auth/jwt";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import { Token } from "./d";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  // debug: true,
   session: { strategy: "jwt", updateAge: 60 * 30 },
   providers: [GitHub, Google],
   callbacks: {
@@ -77,7 +76,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           );
 
           if (!response.ok) {
-            console.log("error refreshing");
             throw Error("RefreshAccessTokenError");
           }
 
@@ -85,8 +83,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.accessToken = newToken;
         } catch (error) {
           if (error instanceof Error) {
-            if (error.message === "RefreshAccessTokenError")
+            if (error.message === "RefreshAccessTokenError") {
               token.error = "RefreshAccessTokenError";
+            }
           }
         }
       }
@@ -104,9 +103,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       console.log(message);
     },
   },
-  // pages: {
-  //   signIn: "/login",
-  // },
+  pages: {
+    // signIn: "/login",
+    // signOut: "/",
+  },
 });
 
 declare module "next-auth" {
