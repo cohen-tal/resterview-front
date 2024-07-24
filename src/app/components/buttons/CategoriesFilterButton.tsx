@@ -8,7 +8,7 @@ export default function CategoriesFilterButton({
   return (
     <div
       onClick={onClick}
-      className="text-light-gray flex items-center justify-center border p-3 gap-2 rounded-xl text-sm"
+      className="text-light-gray flex items-center justify-center border p-3 gap-2 rounded-xl text-sm hover:cursor-pointer"
     >
       <TuneIcon />
       <div className="text-light-gray text-sm">Filter</div>
