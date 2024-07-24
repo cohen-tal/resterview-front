@@ -1,7 +1,6 @@
 import Image from "next/image";
 import StarRatingInput from "../rating/StarRatingInput";
-import StarInput from "../rating/StarInput";
-import { ReviewAPI, User } from "../../../../d";
+import { ReviewAPI } from "../../../../d";
 
 interface ReviewCardProps {
   review: ReviewAPI;
@@ -21,12 +20,12 @@ export default function ReviewCard({ review }: ReviewCardProps) {
       <div className="break-words w-full h-full bg-slate-50/65 border rounded-xl">
         <div className="flex justify-between items-center w-full h-1/4 p-3">
           <StarRatingInput
-            rating="stars"
+            ratingType="stars"
             readOnly={true}
             defaultValue={review.rating}
           />
           <div className="mr-10 font-roboto">
-            {/* {review.dateAdded.toLocaleDateString()} */}
+            {new Date(review.dateAdded).toLocaleDateString()}
           </div>
           {/* <StarRatingInput rating="price" /> */}
         </div>

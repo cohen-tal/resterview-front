@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Review, User } from "../../../../d";
+import { RecentReview, Review, User } from "../../../../d";
 import Paper from "@mui/material/Paper";
 import { Avatar } from "@mui/material";
 import Image from "next/image";
@@ -13,16 +13,12 @@ interface RecentReviewCardProps {
 }
 
 interface Props {
-  text: string;
+  userId?: string;
+  userImage?: string;
+  review?: Partial<RecentReview>;
+  text?: string;
   controls?: AnimationControls;
   containerWidth?: number;
-}
-
-function text(reviewText: string): string {
-  if (reviewText.length > 164) {
-    return reviewText.substring(0, 163).concat("...");
-  }
-  return reviewText;
 }
 
 export default function RecentReviewCard(props: Props) {
@@ -39,7 +35,7 @@ export default function RecentReviewCard(props: Props) {
         elevation={0}
       >
         <div className="flex items-center gap-2">
-          <Avatar src="/.logo.png" alt="user-avatar" />
+          <Avatar src={props.userImage ?? "/.logo.png"} alt="user-avatar" />
           <div className="relative w-28 h-6">
             <Image
               src="/rating1.png"
@@ -49,7 +45,7 @@ export default function RecentReviewCard(props: Props) {
             />
           </div>
         </div>
-        <div className="mt-2 max-w-72">{text(props.text)}</div>
+        <div className="mt-2 max-w-72 line-clamp-3">{props.text}</div>
       </Paper>
     </motion.div>
   );
