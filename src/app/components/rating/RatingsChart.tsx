@@ -15,14 +15,16 @@ export default function RatingsChart({
   return (
     <div className="flex w-full items-center justify-end gap-6 lg:gap-20 text-light-gray">
       <div className="flex flex-col">
-        <div className="font-semibold text-xl whitespace-nowrap">
+        <div className="font-semibold text-xl whitespace-nowrap text-right">
           Overall Rating
         </div>
         <div className="flex items-center">
           <MdOutlineStar className="text-5xl" />
           <div className="font-semibold text-5xl">{overallRating}</div>
         </div>
-        <div className=" text-gray-600 pl-3">{amountOfReviews} reviews</div>
+        <div className="text-center text-gray-600 pl-3">
+          {amountOfReviews} reviews
+        </div>
       </div>
       <div className="grid grid-cols-[minmax(50px,max-content)_1fr] w-full font-figtree items-center gap-1">
         5 stars
