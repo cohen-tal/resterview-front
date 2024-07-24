@@ -1,10 +1,15 @@
 "use client";
-import { motion, useAnimation } from "framer-motion";
+import { AnimationControls, motion, useAnimation } from "framer-motion";
 import RecentReviewCard from "../cards/RecentReviewCard";
 import useMeasure from "react-use-measure";
 import { useEffect } from "react";
+import { RecentReview } from "../../../../d";
 
-export default function RecentReviewsContainer() {
+export default function RecentReviewsContainer({
+  reviews,
+}: {
+  reviews?: Partial<RecentReview>[];
+}) {
   const [ref, { width }] = useMeasure();
   const controls = useAnimation();
 
@@ -24,7 +29,7 @@ export default function RecentReviewsContainer() {
         },
       });
     }
-  }, [width, controls]);
+  }, [width, controls, reviews]);
 
   return (
     <div className="p-4 flex flex-col mr-auto w-full" ref={ref}>
@@ -34,20 +39,17 @@ export default function RecentReviewsContainer() {
         </h2>
       </div>
       <motion.div className="flex gap-4 p-8">
-        {[...Array(8).keys()].map((i) => (
-          <RecentReviewCard
-            key={`original-${i}`}
-            text={String(i + 1)}
-            controls={controls}
-          />
-        ))}
-        {[...Array(8).keys()].map((i) => (
-          <RecentReviewCard
-            key={`duplicate-${i}`}
-            text={String(i + 1)}
-            controls={controls}
-          />
-        ))}
+        {reviews &&
+          reviews.map((review) => (
+            <RecentReviewCard
+              key={review.id}
+              review={review}
+              userId={review.author?.id!}
+              userImage={review.author?.image ?? ""}
+              text={review.text ?? ""}
+              controls={controls}
+            />
+          ))}
       </motion.div>
     </div>
   );
