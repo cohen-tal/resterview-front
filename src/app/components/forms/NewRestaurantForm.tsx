@@ -162,16 +162,6 @@ export default function NewRestaurantForm() {
                 index={1}
                 control={control}
               />
-
-              {/* <InputControllerWrapper
-                name="description"
-                type="text"
-                placeholder="Description"
-                index={2}
-                control={control}
-                isTextArea
-              /> */}
-              {/* <FoodCategoriesInput></FoodCategoriesInput> */}
               <Controller
                 name="categories"
                 control={control}
@@ -303,12 +293,7 @@ export default function NewRestaurantForm() {
             Restaurant added successfully!
           </Alert>
         ) : (
-          <Alert
-            // onClose={handleClose}
-            severity="error"
-            variant="filled"
-            sx={{ width: "100%" }}
-          >
+          <Alert severity="error" variant="filled" sx={{ width: "100%" }}>
             Image size must be at most 3 MB.
           </Alert>
         )}
