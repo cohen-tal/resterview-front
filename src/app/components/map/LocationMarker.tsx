@@ -46,7 +46,7 @@ export default function LocationMarker({
         map.flyTo(new LatLng(lat, lng), map.getZoom());
       }
     }
-  }, [map, position, setUserPosition]);
+  }, [map, position, setUserPosition, flyTo]);
 
   return (
     <Marker
