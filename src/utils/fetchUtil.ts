@@ -1,7 +1,12 @@
 import { RestaurantAPI, RestaurantCard, ReviewAPI } from "../../d";
 
 export default async function fetchAPI<
-  T extends RestaurantAPI | ReviewAPI | RestaurantAPI[] | RestaurantCard[] = any
+  T extends
+    | RestaurantAPI
+    | ReviewAPI
+    | RestaurantAPI[]
+    | RestaurantCard[]
+    | any = any
 >(endpoint: string, init?: RequestInit): Promise<T> {
   const url = "http://localhost:8080/api/v1" + endpoint;
   try {
