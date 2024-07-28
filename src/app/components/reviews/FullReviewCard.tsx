@@ -1,79 +1,144 @@
+"use client";
 import Image from "next/image";
 import StarRatingInput from "../rating/StarRatingInput";
 import { ReviewAPI } from "../../../../d";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
+import { MdDelete, MdEdit } from "react-icons/md";
+import DropDownMenu from "../menus/DropDownMenu";
+import { useSession } from "next-auth/react";
+import { RiPencilFill } from "react-icons/ri";
+import { useState } from "react";
+import Modal from "../modal/Modal";
+import EditReviewForm from "../forms/EditReviewForm";
+import warningAnimation from "../../../../public/lottie/warning.json";
+import Lottie from "react-lottie";
 
 interface ReviewCardProps {
   review: ReviewAPI;
+  onEdit?: () => void;
 }
 
-export default function FullReviewCard({ review }: ReviewCardProps) {
+export default function FullReviewCard({ review, onEdit }: ReviewCardProps) {
+  const { data: session } = useSession();
+  const [editReview, setEditReview] = useState(false);
+  const [deleteReview, setDeleteReview] = useState(false);
   return (
-    <div className="relative flex flex-col justify-center min-h-fit w-full rounded-xl gap-2 shadow-md p-6 border font-figtree">
-      <div className="flex place-items-center gap-2">
-        <div className="relative rounded-full w-12 h-12 overflow-hidden shadow-md">
-          <Image
-            src={"/landing-plate.png"}
-            alt="avatar"
-            fill
-            style={{ objectFit: "cover", zIndex: 999 }}
-          />
-        </div>
-        <div>
-          {review.author.name}
-          <div className="flex place-items-center text-sm text-gray-400 gap-2">
-            <div className="flex place-items-center gap-0.5">
-              <AiOutlineLike />5
-            </div>
-            <div className="flex place-items-center gap-0.5">
-              <AiOutlineDislike />0
+    <>
+      <div className="relative flex flex-col justify-center min-h-fit w-full rounded-xl gap-2 shadow-md p-6 border font-figtree">
+        {session?.id === review.author.id && (
+          <DropDownMenu>
+            <button
+              className="w-full flex place-items-center p-2 gap-1 hover:bg-gray-100"
+              onClick={() => {
+                setEditReview((prev) => !prev);
+              }}
+            >
+              Edit review
+              <RiPencilFill />
+            </button>
+            <button
+              className="w-full flex place-items-center p-2 gap-2 hover:bg-gray-100"
+              onClick={() => {
+                setDeleteReview(true);
+              }}
+            >
+              Delete review
+              <MdDelete />
+            </button>
+          </DropDownMenu>
+        )}
+        <div className="flex place-items-center gap-2">
+          <div className="relative rounded-full w-12 h-12 overflow-hidden shadow-md">
+            <Image
+              src={review.author.image ?? "/landing-plate.png"}
+              alt="avatar"
+              fill
+              style={{ objectFit: "cover", zIndex: 999 }}
+            />
+          </div>
+          <div>
+            {review.author.name}
+            <div className="flex place-items-center text-sm text-gray-400 gap-2">
+              <div className="flex place-items-center gap-0.5">
+                <AiOutlineLike />
+                {review.likes ?? 0}
+              </div>
+              <div className="flex place-items-center gap-0.5">
+                <AiOutlineDislike />
+                {review.dislikes ?? 0}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="flex items-center justify-between gap-4 border-t pt-4">
-        <StarRatingInput
-          ratingType="stars"
-          readOnly={true}
-          fontSize="1.25rem"
-          defaultValue={review.rating}
-        />
-        <div className="text-sm text-gray-400">
-          {new Date(review.dateAdded).toLocaleDateString()}
+        <div className="flex items-center justify-between gap-4 border-t pt-4">
+          <StarRatingInput
+            ratingType="stars"
+            readOnly={true}
+            fontSize="1.25rem"
+            defaultValue={review.rating}
+          />
+          <div className="text-sm text-gray-400">
+            {new Date(review.dateAdded).toLocaleDateString()}
+          </div>
+        </div>
+        <p className="text-md break-words text-light-gray max-w-[90%]">
+          {review.text}
+        </p>
+        <div className="flex place-items-center lg:place-content-start gap-4">
+          <button className="flex place-items-center gap-1 border rounded-full text-gray-500 p-2">
+            <AiOutlineLike />
+            Helpful
+          </button>
+          <button className="flex place-items-center gap-1 border rounded-full text-gray-500 p-2">
+            <AiOutlineDislike />
+            Not helpful
+          </button>
         </div>
       </div>
-      <p className="text-md break-words text-light-gray max-w-[90%]">
-        {review.text}
-      </p>
-      <div className="flex place-items-center lg:place-content-start gap-4">
-        <button className="flex place-items-center gap-1 border rounded-full text-gray-500 p-2">
-          <AiOutlineLike />
-          Helpful
-        </button>
-        <button className="flex place-items-center gap-1 border rounded-full text-gray-500 p-2">
-          <AiOutlineDislike />
-          Not helpful
-        </button>
-      </div>
-    </div>
+      <Modal
+        isOpen={editReview}
+        onClose={() => {
+          setEditReview(false);
+        }}
+      >
+        <EditReviewForm
+          id={review.id}
+          rating={review.rating}
+          text={review.text}
+          images={review.images}
+          onSubmitSuccessful={() => {
+            setEditReview(false);
+            onEdit?.();
+          }}
+        />
+      </Modal>
+      <Modal
+        isOpen={deleteReview}
+        onClose={() => {
+          setDeleteReview(false);
+        }}
+      >
+        <div className="p-6">
+          <Lottie
+            options={{
+              animationData: warningAnimation,
+              loop: true,
+              autoplay: true,
+            }}
+            width="100%"
+            height={220}
+          />
+          <h2 className="text-3xl text-center p-2">Are you sure?</h2>
+          <div className="flex place-items-center gap-2 p-2">
+            <button className="w-full border rounded-lg p-1 bg-red-300">
+              Yes
+            </button>
+            <button className="w-full border rounded-lg p-1 bg-slate-100">
+              No
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 }
-
-// {/* <div className="break-words w-full h-full bg-slate-50/65 border rounded-xl">
-//         <div className="flex justify-between items-center w-full h-1/4 p-3">
-//           <StarRatingInput rating="stars" readOnly={true} />
-//           <div className="mr-10 font-roboto">
-//             {new Date(Date.now()).toLocaleDateString()}
-//           </div>
-//           {/* <StarRatingInput rating="price" /> */}
-//         </div>
-//         <div className="pl-3.5 pr-3.5 font-figtree">
-//           <div className="w-full h-fit">
-//             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-//             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-//           </div>
-//         </div>
-//         <div className="m-auto w-fit text-xl font-medium text-light-gray mt-4">
-//           Tal Cohen
-//         </div>
-//       </div> */}
