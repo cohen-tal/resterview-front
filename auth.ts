@@ -25,6 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!res.ok) return false;
 
         const parsedRes = await res.json();
+
         user.id = parsedRes.id;
         user.name = parsedRes.name;
         user.email = parsedRes.email;
@@ -55,6 +56,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             picture: user.image,
             accessToken: accessToken,
             refreshToken: refreshToken,
+            id: user.id, // Ensure id is included in the JWT
           };
 
           return jwt;
@@ -93,6 +95,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async session({ token, session }) {
+      session.id = token.id;
       session.accessToken = token.accessToken;
       session.error = token.error;
       return session;
@@ -113,6 +116,7 @@ declare module "next-auth" {
   interface Session {
     accessToken: Token | null;
     error?: "RefreshAccessTokenError";
+    id?: string;
   }
 }
 
@@ -121,5 +125,6 @@ declare module "next-auth/jwt" {
     accessToken: Token;
     refreshToken: Token;
     error?: "RefreshAccessTokenError";
+    id?: string; // Add id to the JWT object
   }
 }
