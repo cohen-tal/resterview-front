@@ -20,7 +20,7 @@ export default function SwiperSliderContainer({
   return (
     <div className="relative w-full h-full">
       <Swiper
-        className={`flex items-center justify-center w-full h-full rounded-t-md ${
+        className={`flex items-center justify-center w-full h-full rounded-t-xl ${
           roundedBottom ? "rounded-b-md" : ""
         }`}
         spaceBetween={50}
