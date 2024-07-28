@@ -1,3 +1,4 @@
+"use client";
 import Rating from "@mui/material/Rating";
 import { useState } from "react";
 import { PiStarFill, PiStarHalfFill } from "react-icons/pi";
