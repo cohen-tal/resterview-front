@@ -17,10 +17,11 @@ export interface RestaurantCard
 
 export interface Review {
   id: string;
-  rating: string;
+  rating: string | number;
   likes?: number;
   dislikes?: number;
   text: string;
+  images?: string[];
 }
 
 export interface RecentReview
