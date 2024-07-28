@@ -1,4 +1,5 @@
-import { useState } from "react";
+"use client";
+import { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import { PiTimerBold } from "react-icons/pi";
@@ -19,13 +20,17 @@ interface AllReviewsContainerProps {
     "id" | "name" | "rating" | "reviews" | "ratingPercentages"
   >;
   isOpen: boolean;
+  alreadyWrittenReview?: boolean;
   onClose: () => void;
+  onReviewEdit?: () => void;
 }
 
 export default function AllReviewsContainer({
   restaurant,
   isOpen,
   onClose,
+  onReviewEdit,
+  alreadyWrittenReview = false,
 }: AllReviewsContainerProps) {
   const [isFilterOpened, setIsFilterOpened] = useState(false);
   const [selected, setSelected] = useState("");
@@ -55,22 +60,28 @@ export default function AllReviewsContainer({
                   setIsFilterOpened(true);
                 }}
               />
-              <Link
-                href={`reviews/writereview/${restaurant.id}`}
-                replace
-                className="flex flex-col lg:flex-row items-center w-full justify-between pl-4 pr-4 border rounded-lg font-figtree shadow-md text-md text-blue-600"
-              >
-                Start writing a review
-                <StarRatingInput
-                  ratingType="stars"
-                  readOnly={true}
-                  fontSize="2rem"
-                />
-              </Link>
+              {!alreadyWrittenReview && (
+                <Link
+                  href={`reviews/writereview/${restaurant.id}`}
+                  replace
+                  className="flex flex-col lg:flex-row items-center w-full justify-between pl-4 pr-4 border rounded-lg font-figtree shadow-md text-md text-blue-600"
+                >
+                  Start writing a review
+                  <StarRatingInput
+                    ratingType="stars"
+                    readOnly={true}
+                    fontSize="2rem"
+                  />
+                </Link>
+              )}
             </div>
-            <div className="flex flex-col place-items-center gap-6">
+            <div className="flex flex-col place-items-center gap-6 pb-5">
               {restaurant.reviews.map((review) => (
-                <FullReviewCard key={review.id} review={review} />
+                <FullReviewCard
+                  key={review.id + review.rating}
+                  review={review}
+                  onEdit={onReviewEdit}
+                />
               ))}
             </div>
           </div>
