@@ -15,7 +15,7 @@ export default function RestaurantCard({
 }: RestaurantCardProps) {
   return (
     <Link
-      className="flex flex-col items-center justify-center border rounded-md w-full max-w-[398px] max-h-[440px] shadow-md md:hover:scale-110 ease-in-out duration-300"
+      className="flex flex-col items-center justify-center border rounded-xl w-full max-w-[398px] max-h-[440px] shadow-md md:hover:scale-110 ease-in-out duration-300"
       href={`/restaurants/${id}`}
     >
       <div className="w-full h-48">
