@@ -23,7 +23,7 @@ async function fetchRestaurant(id: string, token: string): Promise<Restaurant> {
   const restaurantApi: RestaurantAPI = await res.json();
 
   if (!res.ok) {
-    throw new Error("fetch errror");
+    throw new Error((restaurantApi as any).message);
   }
 
   /* TODO: add parsing method that will parse the dates and nested dates from string to date objects.
