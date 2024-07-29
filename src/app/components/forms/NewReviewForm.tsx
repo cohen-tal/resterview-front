@@ -107,7 +107,7 @@ export default function NewReviewForm() {
         open={submitSuccessful}
         autoHideDuration={2000}
         onClose={() => {
-          router.push(`/reviews/${restaurantId}`);
+          router.push(`/restaurants/${restaurantId}`);
         }}
       >
         <Alert severity="success" variant="filled" sx={{ width: "100%" }}>
