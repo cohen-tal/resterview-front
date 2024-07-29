@@ -12,6 +12,7 @@ import ImageUpload from "../image-upload/ImageUpload";
 import { useParams, useRouter } from "next/navigation";
 import Alert from "@mui/material/Alert/Alert";
 import Snackbar from "@mui/material/Snackbar/Snackbar";
+import fetchAPI from "@/utils/fetchUtil";
 
 export default function NewReviewForm() {
   const { data: session } = useSession();
@@ -46,7 +47,7 @@ export default function NewReviewForm() {
     }
 
     try {
-      const res = await fetch(`http://localhost:8080/api/v1/reviews`, {
+      const res = await fetchAPI("/reviews", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${session?.accessToken?.token}`,

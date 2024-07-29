@@ -13,9 +13,10 @@ import { Restaurant, RestaurantAPI, ReviewAPI } from "../../../../d";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import fetchAPI from "@/utils/fetchUtil";
 
 async function fetchRestaurant(id: string, token: string): Promise<Restaurant> {
-  const res = await fetch(`http://localhost:8080/api/v1/restaurants/${id}`, {
+  const res = await fetchAPI(`/restaurants/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
