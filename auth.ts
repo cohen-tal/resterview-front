@@ -5,7 +5,7 @@ import Google from "next-auth/providers/google";
 import { Token } from "./d";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  session: { strategy: "jwt", updateAge: 60 * 30 },
+  session: { strategy: "jwt", updateAge: 60 * 25 },
   providers: [GitHub, Google],
   callbacks: {
     async signIn({ user }) {
@@ -37,6 +37,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     },
     async jwt({ token, account, user }) {
+      console.log("in JWT func");
+
       if (account) {
         try {
           const response = await fetch(
