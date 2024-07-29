@@ -62,9 +62,11 @@ export default function AllReviewsContainer({
               />
               {!alreadyWrittenReview && (
                 <Link
-                  href={`reviews/writereview/${restaurant.id}`}
-                  replace
+                  href={`/reviews/writereview/${restaurant.id}`}
                   className="flex flex-col lg:flex-row items-center w-full justify-between pl-4 pr-4 border rounded-lg font-figtree shadow-md text-md text-blue-600"
+                  onClick={(e) => {
+                    document.body.style.overflow = "auto";
+                  }}
                 >
                   Start writing a review
                   <StarRatingInput
