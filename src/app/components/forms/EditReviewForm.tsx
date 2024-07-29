@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import Alert from "@mui/material/Alert/Alert";
 import Snackbar from "@mui/material/Snackbar/Snackbar";
 import { Review } from "../../../../d";
+import fetchAPI from "@/utils/fetchUtil";
 
 export default function EditReviewForm({
   id,
@@ -57,7 +58,7 @@ export default function EditReviewForm({
     }
 
     try {
-      const res = await fetch(`http://localhost:8080/api/v1/reviews`, {
+      const res = await fetchAPI("/reviews", {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${session?.accessToken?.token}`,
@@ -65,13 +66,8 @@ export default function EditReviewForm({
         body: formData,
       });
 
-      if (!res.ok) {
-        // Handle HTTP errors
-        throw new Error(res.statusText);
-      }
       setSubmitSuccessful(true);
     } catch (error) {
-      console.error("Error submitting form:", error);
       setSubmitError(true);
     }
   };
