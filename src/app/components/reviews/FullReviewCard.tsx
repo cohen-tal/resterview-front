@@ -3,7 +3,7 @@ import Image from "next/image";
 import StarRatingInput from "../rating/StarRatingInput";
 import { ReviewAPI } from "../../../../d";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
-import { MdDelete, MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import DropDownMenu from "../menus/DropDownMenu";
 import { useSession } from "next-auth/react";
 import { RiPencilFill } from "react-icons/ri";
@@ -12,6 +12,7 @@ import Modal from "../modal/Modal";
 import EditReviewForm from "../forms/EditReviewForm";
 import warningAnimation from "../../../../public/lottie/warning.json";
 import Lottie from "react-lottie";
+import fetchAPI from "@/utils/fetchUtil";
 
 interface ReviewCardProps {
   review: ReviewAPI;
@@ -22,6 +23,23 @@ export default function FullReviewCard({ review, onEdit }: ReviewCardProps) {
   const { data: session } = useSession();
   const [editReview, setEditReview] = useState(false);
   const [deleteReview, setDeleteReview] = useState(false);
+
+  async function handleDelete() {
+    try {
+      const res = await fetchAPI("/reviews", {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${session?.accessToken?.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          reviewId: review.id,
+          authorId: review.author.id,
+        }),
+      });
+    } catch (err) {}
+  }
+
   return (
     <>
       <div className="relative flex flex-col justify-center min-h-fit w-full rounded-xl gap-2 shadow-md p-6 border font-figtree">
@@ -130,10 +148,18 @@ export default function FullReviewCard({ review, onEdit }: ReviewCardProps) {
           />
           <h2 className="text-3xl text-center p-2">Are you sure?</h2>
           <div className="flex place-items-center gap-2 p-2">
-            <button className="w-full border rounded-lg p-1 bg-red-300">
+            <button
+              className="w-full border rounded-lg p-1 bg-red-300"
+              onClick={handleDelete}
+            >
               Yes
             </button>
-            <button className="w-full border rounded-lg p-1 bg-slate-100">
+            <button
+              className="w-full border rounded-lg p-1 bg-slate-100"
+              onClick={() => {
+                setDeleteReview(false);
+              }}
+            >
               No
             </button>
           </div>
