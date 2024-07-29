@@ -2,11 +2,9 @@
 import RestaurantCard from "../components/cards/RestaurantCard";
 import { useSession } from "next-auth/react";
 import RestaurantCategoriesMenu from "../components/menus/RestaurantCategoriesMenu";
-import AddRestaurantButton from "../components/buttons/AddRestaurantButton";
 import { useEffect, useRef, useState } from "react";
 import fetchAPI from "@/utils/fetchUtil";
 import { RestaurantCard as RestaurantCardType } from "../../../d";
-import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import { PiTimerBold } from "react-icons/pi";
 import FilterByRatingButtonGroup from "../components/buttons/FilterByRatingButtonGroup";
 import SortReviewsButton from "../components/buttons/SortReviewsButton";
