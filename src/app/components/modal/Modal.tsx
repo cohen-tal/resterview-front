@@ -23,7 +23,7 @@ export default function Modal({ isOpen, children, onClose }: ModalProps) {
             >
               <button
                 onClick={onClose}
-                className="absolute right-4 lg:right-7 top-0 translate-y-1/2"
+                className="absolute z-50 right-4 lg:right-7 top-0 translate-y-1/2"
               >
                 <IoCloseSharp size={24} />
               </button>
