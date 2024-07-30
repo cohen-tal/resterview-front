@@ -8,7 +8,7 @@ export default async function fetchAPI<
     | RestaurantCard[]
     | any = any
 >(endpoint: string, init?: RequestInit): Promise<T> {
-  const apiUrl = process.env.API_URL as string;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
 
   const url = apiUrl + "/api/v1" + endpoint;
 

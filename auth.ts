@@ -10,7 +10,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async signIn({ user }) {
       try {
-        const baseUrl = process.env.API_URL as string;
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL as string;
         const res = await fetch(`${baseUrl}/api/v1/users`, {
           method: "POST",
           headers: {
@@ -39,7 +39,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async jwt({ token, account, user }) {
       console.log("in JWT func");
-      const baseUrl = process.env.API_URL as string;
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL as string;
 
       if (account) {
         try {
