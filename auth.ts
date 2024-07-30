@@ -10,7 +10,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async signIn({ user }) {
       try {
-        const res = await fetch("http://localhost:8080/api/v1/users", {
+        const baseUrl = process.env.API_URL as string;
+        const res = await fetch(`${baseUrl}/api/v1/users`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -38,17 +39,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async jwt({ token, account, user }) {
       console.log("in JWT func");
+      const baseUrl = process.env.API_URL as string;
 
       if (account) {
         try {
-          const response = await fetch(
-            "http://localhost:8080/api/v1/auth/login",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ id: user.id }),
-            }
-          );
+          const response = await fetch(`${baseUrl}/api/v1/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: user.id }),
+          });
 
           const { accessToken, refreshToken } = await response.json();
 
@@ -70,14 +69,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       if (Date.now() / 1000 >= token.accessToken.expiresAt) {
         try {
-          const response = await fetch(
-            "http://localhost:8080/api/v1/auth/token",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ refreshToken: token.refreshToken }),
-            }
-          );
+          const response = await fetch(`${baseUrl}/api/v1/auth/token`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ refreshToken: token.refreshToken }),
+          });
 
           if (!response.ok) {
             throw Error("RefreshAccessTokenError");
