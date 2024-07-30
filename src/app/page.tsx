@@ -12,10 +12,9 @@ export default function Home() {
     useState<RecentRestaurant[]>();
 
   useEffect(() => {
-    fetchAPI("/home").then((val) => {
-      console.dir(val);
-      setRecentRestaurants(val.restaurants);
-      setRecentReviews(val.reviews);
+    fetchAPI("/home").then((recent) => {
+      setRecentRestaurants(recent.restaurants);
+      setRecentReviews(recent.reviews);
     });
   }, []);
 
@@ -36,9 +35,6 @@ export default function Home() {
           quality={100}
         />
       </div>
-
-      {/* <section className="bg-white/40 dark:bg-slate-800 shadow-md rounded-full mb-8"></section> */}
-
       <section className="w-full bg-white/15 dark:bg-slate-800 shadow-sm mb-4">
         <RecentReviewsContainer reviews={recentReviews} />
       </section>
