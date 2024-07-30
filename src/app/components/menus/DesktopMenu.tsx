@@ -25,6 +25,7 @@ export default async function DesktopMenu() {
         <AccountDropdownMenu
           onClickLogout={handleLogout}
           userName={session.user?.name!}
+          userImage={session.user?.image!}
         />
       ) : (
         <LoginButton func={handleLogin} />

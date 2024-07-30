@@ -9,11 +9,13 @@ import Image from "next/image";
 
 interface AccountDropdownMenuProps {
   userName: string;
+  userImage: string;
   onClickLogout: () => Promise<void>;
 }
 
 export default function AccountDropdownMenu({
   userName,
+  userImage,
   onClickLogout,
 }: AccountDropdownMenuProps) {
   const [open, setOpen] = useState<boolean>(false);
@@ -23,7 +25,7 @@ export default function AccountDropdownMenu({
       className="relative flex items-center justify-center p-2 gap-2 ml-24 bg-slate-100/65 hover:bg-slate-100 rounded-lg hover:cursor-pointer"
       onClick={() => setOpen((prev) => !prev)}
     >
-      <Avatar src="/landing5.png" alt="avatar" sx={{ width: 28, height: 28 }} />
+      <Avatar src={userImage} alt="avatar" sx={{ width: 28, height: 28 }} />
       <div className="text-light-gray font-roboto text-shadow text-sm">
         {userName}
       </div>
@@ -58,7 +60,6 @@ export default function AccountDropdownMenu({
           >
             <ul className="list-none p-1 rounded-lg bg-slate-100/65 shadow-lg">
               <li className="flex items-center gap-2 hover:bg-slate-300 hover:cursor-pointer hover:rounded-md p-2">
-                {/* <Avatar sx={{ width: 26, height: 26 }} /> */}
                 <div className="relative w-[28px] h-[28px]">
                   <Image
                     src="https://img.icons8.com/material-rounded/48/737373/user-male-circle.png"
