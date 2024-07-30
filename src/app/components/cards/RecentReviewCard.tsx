@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import { Avatar } from "@mui/material";
 import Image from "next/image";
 import { AnimationControls, Variants, motion } from "framer-motion";
+import StarRatingInput from "../rating/StarRatingInput";
 
 interface RecentReviewCardProps {
   user: User;
@@ -37,14 +38,16 @@ export default function RecentReviewCard(props: Props) {
         <div className="flex items-center gap-2">
           <Avatar src={props.userImage ?? "/.logo.png"} alt="user-avatar" />
           <div className="relative w-28 h-6">
-            <Image
-              src="/rating1.png"
-              alt="Landing page picture"
-              layout="fill"
-              objectFit="contain"
+            <StarRatingInput
+              readOnly
+              ratingType="stars"
+              defaultValue={props.review?.rating}
             />
           </div>
         </div>
+        <h3 className="text-light-gray font-figtree text-xl">
+          {props.review?.author?.name}
+        </h3>
         <div className="mt-2 max-w-72 line-clamp-3">{props.text}</div>
       </Paper>
     </motion.div>
