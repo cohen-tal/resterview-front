@@ -11,14 +11,15 @@ export default function RecentRestaurantsContainer({
   recents,
 }: RecentRestaurantsContainerProps) {
   return (
-    <section className="w-full shadow-sm">
+    <section className="w-full shadow-sm mb-80">
       <h2 className="sticky top-20 p-4 text-black/70 drop-shadow-md font-bold text-2xl">
         Newest Restaurants
       </h2>
       <div className="relative text-center w-full">
         {recents.map((restaurant, index) => (
           <RecentRestaurantCard
-            key={restaurant.name + index}
+            key={restaurant.id}
+            id={restaurant.id}
             name={restaurant.name}
             rating={restaurant.rating}
             address={restaurant.address}

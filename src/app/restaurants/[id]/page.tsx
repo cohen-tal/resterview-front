@@ -16,22 +16,17 @@ import { useSession } from "next-auth/react";
 import fetchAPI from "@/utils/fetchUtil";
 
 async function fetchRestaurant(id: string, token: string): Promise<Restaurant> {
-  const res = await fetchAPI(`/restaurants/${id}`, {
+  const restaurantAPI = await fetchAPI<RestaurantAPI>(`/restaurants/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  const restaurantApi: RestaurantAPI = await res.json();
-
-  if (!res.ok) {
-    throw new Error((restaurantApi as any).message);
-  }
 
   /* TODO: add parsing method that will parse the dates and nested dates from string to date objects.
   Currently components using Restaurant as prop convert the string to new Date */
   const restaurant: Restaurant = {
-    ...restaurantApi,
-    ratingPercentages: getRatingPercentages(restaurantApi.reviews),
+    ...restaurantAPI,
+    ratingPercentages: getRatingPercentages(restaurantAPI.reviews),
   };
 
   return restaurant;

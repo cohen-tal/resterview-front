@@ -4,17 +4,37 @@ import { useSession } from "next-auth/react";
 import RestaurantCategoriesMenu from "../components/menus/RestaurantCategoriesMenu";
 import { useEffect, useRef, useState } from "react";
 import fetchAPI from "@/utils/fetchUtil";
-import { RestaurantCard as RestaurantCardType } from "../../../d";
+import { RestaurantCardType } from "../../../d";
 import { PiTimerBold } from "react-icons/pi";
 import FilterByRatingButtonGroup from "../components/buttons/FilterByRatingButtonGroup";
 import SortReviewsButton from "../components/buttons/SortReviewsButton";
 import FilterMenu from "../components/menus/FilterMenu";
 import FilterMenuSection from "../components/menus/menu-sections/FilterMenuSection";
 import FilterByDistanceButtonGroup from "../components/buttons/FilterByDistanceButtonGroup";
-export default function RestaurantsPage() {
-  const [restaurantCards, setRestaurantCards] = useState<RestaurantCardType[]>(
-    []
+import { Skeleton } from "@mui/material";
+import RestaurantCardSkeleton from "../components/loading/RestaurantCardSkeleton";
+import Lottie from "react-lottie";
+import thinkingAnimation from "../../../public/lottie/thinking-animation.json";
+
+function SkeletonCard(): JSX.Element {
+  return (
+    <Skeleton>
+      <RestaurantCard
+        id="asdsad"
+        address="adress"
+        categories={new Array(4).fill("pasta")}
+        images={["/logo.png"]}
+        name="name"
+        rating={5}
+      />
+    </Skeleton>
   );
+}
+
+export default function RestaurantsPage() {
+  const [restaurantCards, setRestaurantCards] = useState<
+    RestaurantCardType[] | null
+  >([]);
   const [isFilterOpened, setIsFilterOpened] = useState(false);
   const [selected, setSelected] = useState("");
   const [ratingFilter, setRatingFilter] = useState(0);
@@ -22,7 +42,7 @@ export default function RestaurantsPage() {
   const session = useSession();
 
   useEffect(() => {
-    fetchAPI<RestaurantCardType[]>("/restaurants?loc=0&loc=0").then((cards) => {
+    fetchAPI<RestaurantCardType[]>("/restaurants").then((cards) => {
       setRestaurantCards([...cards]);
       fetchedRestaurants.current = cards;
     });
@@ -36,7 +56,11 @@ export default function RestaurantsPage() {
     const sortedByCategory = fetchedRestaurants.current?.filter((restaurant) =>
       restaurant.categories.includes(category)
     );
-    setRestaurantCards(sortedByCategory ?? []);
+    setRestaurantCards(() => {
+      return sortedByCategory && sortedByCategory.length > 0
+        ? sortedByCategory
+        : null;
+    });
   }
 
   async function fetchRestaurantsInRadius(radius: number) {
@@ -58,12 +82,25 @@ export default function RestaurantsPage() {
           setIsFilterOpened(true);
         }}
       />
-      <div className="grid grid-flow-row place-items-center pl-2 pr-2 gap-8 md:grid-cols-3 md:pl-16 md:pr-16 w-full">
-        {restaurantCards.map((card) => (
-          <RestaurantCard key={card.id} {...card} />
-        ))}
-      </div>
-      {/* <AddRestaurantButton /> */}
+      {restaurantCards ? (
+        <div className="grid grid-flow-row place-items-center pl-2 pr-2 gap-8 md:grid-cols-3 md:pl-16 md:pr-16 w-full">
+          {restaurantCards.length > 0 ? (
+            restaurantCards.map((card) => (
+              <RestaurantCard key={card.id} {...card} />
+            ))
+          ) : (
+            <RestaurantCardSkeleton />
+          )}
+        </div>
+      ) : (
+        <Lottie
+          options={{
+            animationData: thinkingAnimation,
+            autoplay: true,
+            loop: true,
+          }}
+        />
+      )}
       <FilterMenu
         open={isFilterOpened}
         onClickExit={() => {

@@ -10,7 +10,7 @@ interface DropDownMenuProps {
 export default function DropDownMenu({ children }: DropDownMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="absolute top-1 right-2">
+    <div className="absolute top-1 right-2 z-[999]">
       <button
         className="bg-transparent"
         onClick={() => setIsOpen((prev) => !prev)}

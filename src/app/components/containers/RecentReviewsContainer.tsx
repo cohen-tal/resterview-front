@@ -8,7 +8,7 @@ import { RecentReview } from "../../../../d";
 export default function RecentReviewsContainer({
   reviews,
 }: {
-  reviews?: Partial<RecentReview>[];
+  reviews: RecentReview[];
 }) {
   const [ref, { width }] = useMeasure();
   const controls = useAnimation();
@@ -44,9 +44,6 @@ export default function RecentReviewsContainer({
             <RecentReviewCard
               key={review.id}
               review={review}
-              userId={review.author?.id!}
-              userImage={review.author?.image ?? ""}
-              text={review.text ?? ""}
               controls={controls}
             />
           ))}

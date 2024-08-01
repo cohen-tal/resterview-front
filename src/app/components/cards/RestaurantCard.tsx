@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { RestaurantCard as RestaurantCardProps } from "../../../../d";
+import { RestaurantCardType as RestaurantCardProps } from "../../../../d";
 import SwiperSliderContainer from "../containers/SwiperSliderContainer";
 import { SwiperSlide } from "swiper/react";
 import StarRatingInput from "../rating/StarRatingInput";

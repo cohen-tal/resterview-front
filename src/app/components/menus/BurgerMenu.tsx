@@ -139,24 +139,10 @@ export default function BurgerMenu() {
                     >
                       <MdOutlineReviews />
                     </BurgerMenuItem>
-                    <BurgerMenuItem
-                      text="Recent Reviews"
-                      href="/profile"
-                      onClick={toggle}
-                    >
-                      <VscOpenPreview />
-                    </BurgerMenuItem>
                   </BurgerMenuSection>
                 </div>
                 <div className="self-center border-b w-[90%]">
                   <BurgerMenuSection sectionTitle="Discover">
-                    <BurgerMenuItem
-                      text="Newest Restaurants"
-                      href="/restaurants/"
-                      onClick={toggle}
-                    >
-                      <MdOutlineWatchLater />
-                    </BurgerMenuItem>
                     <BurgerMenuItem
                       text="Top Rated Restaurants"
                       href="/restaurants/favorites"

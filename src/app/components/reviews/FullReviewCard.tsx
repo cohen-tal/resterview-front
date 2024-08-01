@@ -16,10 +16,15 @@ import fetchAPI from "@/utils/fetchUtil";
 
 interface ReviewCardProps {
   review: ReviewAPI;
+  isHistoryCard?: boolean;
   onEdit?: () => void;
 }
 
-export default function FullReviewCard({ review, onEdit }: ReviewCardProps) {
+export default function FullReviewCard({
+  review,
+  onEdit,
+  isHistoryCard = false,
+}: ReviewCardProps) {
   const { data: session } = useSession();
   const [editReview, setEditReview] = useState(false);
   const [deleteReview, setDeleteReview] = useState(false);
@@ -40,10 +45,16 @@ export default function FullReviewCard({ review, onEdit }: ReviewCardProps) {
     } catch (err) {}
   }
 
+  const isAuthor = session?.id === review.author.id ?? true;
+
   return (
     <>
-      <div className="relative flex flex-col justify-center min-h-fit w-full rounded-xl gap-2 shadow-md p-6 border font-figtree">
-        {session?.id === review.author.id && (
+      <div
+        className={`relative flex flex-col justify-center min-h-fit w-full rounded-xl gap-2 p-6 border font-figtree ${
+          isHistoryCard ? "shadow-sm" : "shadow-md"
+        }`}
+      >
+        {isAuthor && (
           <DropDownMenu>
             <button
               className="w-full flex place-items-center p-2 gap-1 hover:bg-gray-100"
@@ -65,17 +76,23 @@ export default function FullReviewCard({ review, onEdit }: ReviewCardProps) {
             </button>
           </DropDownMenu>
         )}
-        <div className="flex place-items-center gap-2">
-          <div className="relative rounded-full w-12 h-12 overflow-hidden shadow-md">
-            <Image
-              src={review.author.image ?? "/landing-plate.png"}
-              alt="avatar"
-              fill
-              style={{ objectFit: "cover", zIndex: 999 }}
-            />
-          </div>
+        <div
+          className={`flex place-items-center gap-2 ${
+            isHistoryCard && "order-1"
+          }`}
+        >
+          {!isHistoryCard && (
+            <div className="relative rounded-full w-12 h-12 overflow-hidden shadow-md">
+              <Image
+                src={review.author.image ?? "/landing-plate.png"}
+                alt="avatar"
+                fill
+                style={{ objectFit: "cover", zIndex: 999 }}
+              />
+            </div>
+          )}
           <div>
-            {review.author.name}
+            {!isHistoryCard && review.author.name}
             <div className="flex place-items-center text-sm text-gray-400 gap-2">
               <div className="flex place-items-center gap-0.5">
                 <AiOutlineLike />
@@ -88,7 +105,11 @@ export default function FullReviewCard({ review, onEdit }: ReviewCardProps) {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-between gap-4 border-t pt-4">
+        <div
+          className={`flex items-center justify-between gap-4 ${
+            isHistoryCard ? "pt-2" : "border-t pt-4"
+          }`}
+        >
           <StarRatingInput
             ratingType="stars"
             readOnly={true}
@@ -102,16 +123,18 @@ export default function FullReviewCard({ review, onEdit }: ReviewCardProps) {
         <p className="text-md break-words text-light-gray max-w-[90%]">
           {review.text}
         </p>
-        <div className="flex place-items-center lg:place-content-start gap-4">
-          <button className="flex place-items-center gap-1 border rounded-full text-gray-500 p-2">
-            <AiOutlineLike />
-            Helpful
-          </button>
-          <button className="flex place-items-center gap-1 border rounded-full text-gray-500 p-2">
-            <AiOutlineDislike />
-            Not helpful
-          </button>
-        </div>
+        {!isAuthor && (
+          <div className="flex place-items-center lg:place-content-start gap-4">
+            <button className="flex place-items-center gap-1 border rounded-full text-gray-500 p-2">
+              <AiOutlineLike />
+              Helpful
+            </button>
+            <button className="flex place-items-center gap-1 border rounded-full text-gray-500 p-2">
+              <AiOutlineDislike />
+              Not helpful
+            </button>
+          </div>
+        )}
       </div>
       <Modal
         isOpen={editReview}
