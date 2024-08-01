@@ -1,25 +1,11 @@
-import { Variants, motion, useScroll } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+"use client";
+import { Variants, motion } from "framer-motion";
 import { RecentRestaurant } from "../../../../d";
 import { SwiperSlide } from "swiper/react";
 import SwiperSliderContainer from "../containers/SwiperSliderContainer";
 import Image from "next/image";
 import StarRatingInput from "../rating/StarRatingInput";
-
-const cardVariants: Variants = {
-  offscreen: {
-    y: 300,
-  },
-  onscreen: {
-    y: 0,
-    transition: {
-      rotate: -10,
-      type: "spring",
-      bounce: 0.4,
-      duration: 0.8,
-    },
-  },
-};
+import Link from "next/link";
 
 const variants: (enterFromLeft: boolean) => Variants = (
   enterFromLeft: boolean
@@ -43,6 +29,7 @@ const variants: (enterFromLeft: boolean) => Variants = (
 };
 
 export default function RecentRestaurantCard({
+  id,
   name,
   address,
   rating,
@@ -52,7 +39,7 @@ export default function RecentRestaurantCard({
   isOdd,
 }: RecentRestaurant & { isOdd: boolean }) {
   return (
-    <div className="sticky top-32 mr-auto mb-0">
+    <Link href={`/restaurants/${id}`} className="sticky top-32 mr-auto mb-0">
       <motion.div
         className="flex flex-col items-center border w-[340px] mx-auto h-[460px] bg-white rounded-[20px] shadow-[0_0_1px_rgba(0,0,0,0.075),0_0_2px_rgba(0,0,0,0.075),0_0_4px_rgba(0,0,0,0.075),0_0_8px_rgba(0,0,0,0.075),0_0_16px_rgba(0,0,0,0.075)]"
         initial="hidden"
@@ -102,6 +89,6 @@ export default function RecentRestaurantCard({
           </div>
         </div>
       </motion.div>
-    </div>
+    </Link>
   );
 }
