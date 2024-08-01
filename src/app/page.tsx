@@ -4,7 +4,7 @@ import RecentReviewsContainer from "./components/containers/RecentReviewsContain
 import RecentRestaurantsContainer from "./components/containers/RecentRestaurantsContainer";
 import { useEffect, useState } from "react";
 import fetchAPI from "@/utils/fetchUtil";
-import { RecentRestaurant, RecentReview } from "../../d";
+import { RecentRestaurant, RecentReview, Recents } from "../../d";
 
 export default function Home() {
   const [recentReviews, setRecentReviews] = useState<RecentReview[]>();
@@ -12,9 +12,9 @@ export default function Home() {
     useState<RecentRestaurant[]>();
 
   useEffect(() => {
-    fetchAPI("/home").then((recent) => {
-      setRecentRestaurants(recent.restaurants);
-      setRecentReviews(recent.reviews);
+    fetchAPI<Recents>("/home").then((recents) => {
+      setRecentRestaurants(recents.restaurants);
+      setRecentReviews(recents.reviews);
     });
   }, []);
 
@@ -36,10 +36,9 @@ export default function Home() {
         />
       </div>
       <section className="w-full bg-white/15 dark:bg-slate-800 shadow-sm mb-4">
-        <RecentReviewsContainer reviews={recentReviews} />
+        <RecentReviewsContainer reviews={recentReviews ?? []} />
       </section>
       <RecentRestaurantsContainer recents={recentRestaurants ?? []} />
-      <div className="h-[300px]"></div>
     </main>
   );
 }
