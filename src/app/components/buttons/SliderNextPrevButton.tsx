@@ -13,19 +13,13 @@ export default function SliderNextPrevButton({
   const isPrev = direction === "prev";
   return (
     <div
-      className={`${
-        isPrev ? "left-0" : "right-0"
-      } absolute top-0 bottom-0 w-12`}
+      className={`absolute top-0 bottom-0 ${
+        isPrev ? "left-0 lg:-left-1" : "-right-3 lg:-right-1"
+      }`}
     >
-      <div
-        className={`flex items-center justify-start h-full p-1 ${
-          isPrev
-            ? "before:bg-white before:h-full before:absolute before:left-0 before:w-[60%]"
-            : "after:bg-white after:h-full after:absolute after:right-0 after:w-[60%]"
-        }`}
-      >
+      <div className="flex items-center justify-start h-full p-1">
         <button
-          className="rounded-full border p-0.5 sm:p-1 backdrop-blur-sm shadow-md hover:scale-110 z-50"
+          className="rounded-full lg:rounded-none lg:h-full p-0.5 sm:p-1 lg:bg-white lg:hover:scale-110 z-50"
           onClick={() => {
             onClick();
           }}
