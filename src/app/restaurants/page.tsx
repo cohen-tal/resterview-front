@@ -2,7 +2,7 @@
 import RestaurantCard from "../components/cards/RestaurantCard";
 import { useSession } from "next-auth/react";
 import RestaurantCategoriesMenu from "../components/menus/RestaurantCategoriesMenu";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import fetchAPI from "@/utils/fetchUtil";
 import { RestaurantCardType } from "../../../d";
 import { PiTimerBold } from "react-icons/pi";
@@ -11,56 +11,37 @@ import SortReviewsButton from "../components/buttons/SortReviewsButton";
 import FilterMenu from "../components/menus/FilterMenu";
 import FilterMenuSection from "../components/menus/menu-sections/FilterMenuSection";
 import FilterByDistanceButtonGroup from "../components/buttons/FilterByDistanceButtonGroup";
-import { Skeleton } from "@mui/material";
 import RestaurantCardSkeleton from "../components/loading/RestaurantCardSkeleton";
-import Lottie from "react-lottie";
-import thinkingAnimation from "../../../public/lottie/thinking-animation.json";
-
-function SkeletonCard(): JSX.Element {
-  return (
-    <Skeleton>
-      <RestaurantCard
-        id="asdsad"
-        address="adress"
-        categories={new Array(4).fill("pasta")}
-        images={["/logo.png"]}
-        name="name"
-        rating={5}
-      />
-    </Skeleton>
-  );
-}
+import useSWR from "swr";
+import NotFoundAfterLoading from "../components/loading/NotFoundAfterLoading";
 
 export default function RestaurantsPage() {
-  const [restaurantCards, setRestaurantCards] = useState<
-    RestaurantCardType[] | null
-  >([]);
+  const [restaurantCards, setRestaurantCards] =
+    useState<RestaurantCardType[]>();
   const [isFilterOpened, setIsFilterOpened] = useState(false);
   const [selected, setSelected] = useState("");
   const [ratingFilter, setRatingFilter] = useState(0);
-  const fetchedRestaurants = useRef<RestaurantCardType[] | null>(null);
   const session = useSession();
+  const { data, error, isLoading } = useSWR<RestaurantCardType[]>(
+    "/restaurants",
+    fetchAPI
+  );
 
   useEffect(() => {
-    fetchAPI<RestaurantCardType[]>("/restaurants").then((cards) => {
-      setRestaurantCards([...cards]);
-      fetchedRestaurants.current = cards;
-    });
-  }, []);
+    if (data) {
+      setRestaurantCards(data);
+    }
+  }, [data]);
 
   function handleClick(value: string) {
     setSelected(value);
   }
 
   function handleCategoryClick(category: string) {
-    const sortedByCategory = fetchedRestaurants.current?.filter((restaurant) =>
+    const sortedByCategory = data?.filter((restaurant) =>
       restaurant.categories.includes(category)
     );
-    setRestaurantCards(() => {
-      return sortedByCategory && sortedByCategory.length > 0
-        ? sortedByCategory
-        : null;
-    });
+    setRestaurantCards(sortedByCategory ?? []);
   }
 
   async function fetchRestaurantsInRadius(radius: number) {
@@ -82,25 +63,19 @@ export default function RestaurantsPage() {
           setIsFilterOpened(true);
         }}
       />
-      {restaurantCards ? (
-        <div className="grid grid-flow-row place-items-center pl-2 pr-2 gap-8 md:grid-cols-3 md:pl-16 md:pr-16 w-full">
-          {restaurantCards.length > 0 ? (
-            restaurantCards.map((card) => (
-              <RestaurantCard key={card.id} {...card} />
-            ))
-          ) : (
-            <RestaurantCardSkeleton />
-          )}
-        </div>
-      ) : (
-        <Lottie
-          options={{
-            animationData: thinkingAnimation,
-            autoplay: true,
-            loop: true,
-          }}
-        />
+      {!isLoading && restaurantCards && restaurantCards?.length < 1 && (
+        <NotFoundAfterLoading />
       )}
+      {
+        <div className="grid grid-flow-row place-items-center pl-2 pr-2 gap-8 lg:grid-cols-3 md:pl-16 md:pr-16 xl:grid-cols-4 w-full">
+          {isLoading && <RestaurantCardSkeleton />}
+          {restaurantCards &&
+            restaurantCards.length > 0 &&
+            restaurantCards.map((restaurant) => (
+              <RestaurantCard key={restaurant.id} {...restaurant} />
+            ))}
+        </div>
+      }
       <FilterMenu
         open={isFilterOpened}
         onClickExit={() => {
