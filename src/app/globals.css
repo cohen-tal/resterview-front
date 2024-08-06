@@ -2,11 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* html,
+html,
 body {
   width: 100%;
-  position: relative;
-} */
+  height: 100vh;
+  /* position: relative; */
+  scrollbar-gutter: stable;
+}
 
 /* Custom class using @apply for common styles */
 .arrow-right {

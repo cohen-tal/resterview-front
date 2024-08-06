@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import CategoriesMenuItem from "./menu-items/CategoriesMenuItem";
 import CategoriesFilterButton from "../buttons/CategoriesFilterButton";
 import SliderNextPrevButton from "../buttons/SliderNextPrevButton";
-import { useMotionValueEvent, useScroll } from "framer-motion";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 
 const categories: string[][] = [
   ["Pizza", "https://img.icons8.com/ios/100/pizza.png"],
@@ -31,9 +31,11 @@ export default function RestaurantCategoriesMenu({
   onFilterButtonClick,
   onCategoryClick,
 }: RestaurantCategoriesMenuProps) {
+  const [selected, setSelected] = useState("reset");
   const [isLeftButton, setIsLeftButton] = useState(false);
   const [isRightButton, setIsRightButton] = useState(true);
   const container = useRef<HTMLDivElement | null>(null);
+
   const scroll = useScroll({
     container: container,
   });
@@ -79,18 +81,40 @@ export default function RestaurantCategoriesMenu({
           ref={container}
           className="min-h-18 max-h-20 overflow-x-auto scrollbar-hidden"
         >
-          <div className="grid grid-flow-col auto-cols-[calc(100%/5)] md:auto-cols-[calc(100%/12)] gap-4">
-            {categories.map((keyValue) => (
-              <CategoriesMenuItem
-                key={keyValue[0]}
-                name={keyValue[0]}
-                src={keyValue[1]}
-                alt={keyValue[0]}
-                width="28"
-                height="28"
-                onClick={() => onCategoryClick(keyValue[0])}
-              />
-            ))}
+          <div className="grid grid-flow-col auto-cols-[calc(100%/3)] md:auto-cols-[calc(100%/12)] gap-1">
+            {categories.map((keyValue) => {
+              const [category, image] = keyValue;
+              return (
+                <div className="relative" key={category}>
+                  <CategoriesMenuItem
+                    name={category}
+                    src={image}
+                    alt={category}
+                    width="28"
+                    height="28"
+                    onClick={() => {
+                      if (category === selected) {
+                        setSelected("");
+                      } else {
+                        setSelected(category);
+                      }
+                    }}
+                  />
+                  {selected === category && (
+                    <motion.div
+                      layoutId="underline"
+                      className="absolute w-full right-0 left-0 -bottom-[1px] h-[2px] bg-purple-500"
+                      transition={{
+                        duration: 0.2,
+                      }}
+                      onLayoutAnimationComplete={() => {
+                        onCategoryClick(category);
+                      }}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
         {isRightButton && (

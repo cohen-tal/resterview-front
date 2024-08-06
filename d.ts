@@ -82,6 +82,14 @@ export interface ReviewAPI {
   dateEdited: string | Date | null;
 }
 
+export interface HistoryReview extends Omit<ReviewAPI, "author"> {}
+
+export interface UserProfileData {
+  since: Date;
+  restaurants: RestaurantCardType[];
+  reviews: HistoryReview[];
+}
+
 export interface Token {
   token: string;
   type: "access_token" | "refresh_token";
