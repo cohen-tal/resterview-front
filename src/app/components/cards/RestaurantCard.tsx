@@ -42,13 +42,6 @@ export default function RestaurantCard({
             </SwiperSlide>
           )}
         </SwiperSliderContainer>
-        {/* <Image
-          src="/landing4.png"
-          alt="Restaurant"
-          fill
-          objectFit="cover"
-          className="rounded-t-md"
-        /> */}
       </div>
       <div className="flex flex-col items-start p-3 gap-2 w-full max-h-40">
         <p className="text-light-gray font-roboto font-bold text-md">{name}</p>
@@ -63,7 +56,7 @@ export default function RestaurantCard({
           ))}
         </div>
         <div className="flex gap-0.5 items-center justify-between w-full">
-          <p className="text-gray-700 text-sm">{address}</p>
+          <p className="text-gray-700 text-sm line-clamp-1">{address}</p>
           <StarRatingInput
             readOnly
             defaultValue={rating}
