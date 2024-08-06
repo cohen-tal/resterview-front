@@ -21,7 +21,6 @@ export default function RestaurantsPage() {
   const [isFilterOpened, setIsFilterOpened] = useState(false);
   const [selected, setSelected] = useState("");
   const [ratingFilter, setRatingFilter] = useState(0);
-  const session = useSession();
   const { data, error, isLoading } = useSWR<RestaurantCardType[]>(
     "/restaurants",
     fetchAPI
