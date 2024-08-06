@@ -1,6 +1,5 @@
 "use client";
 import RestaurantCard from "../components/cards/RestaurantCard";
-import { useSession } from "next-auth/react";
 import RestaurantCategoriesMenu from "../components/menus/RestaurantCategoriesMenu";
 import { useEffect, useState } from "react";
 import fetchAPI from "@/utils/fetchUtil";
