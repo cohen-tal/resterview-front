@@ -8,25 +8,13 @@ import StarRatingInput from "../rating/StarRatingInput";
 
 interface RecentReviewCardProps {
   review?: Partial<RecentReview>;
-  controls?: AnimationControls;
-  containerWidth?: number;
 }
 
-export default function RecentReviewCard({
-  review,
-  controls,
-  containerWidth,
-}: RecentReviewCardProps) {
+export default function RecentReviewCard({ review }: RecentReviewCardProps) {
   return (
-    <motion.div
-      className="flex justify-center w-full max-h-48 hover:shadow-xl"
-      animate={controls}
-      whileHover={{
-        scale: 1.1,
-      }}
-    >
+    <div className="flex justify-center w-full max-h-48 hover:shadow-xl">
       <Paper
-        className="min-w-fit max-w-xs bg-white border rounded-lg border-black/10 shadow-sm p-4"
+        className="min-w-fit max-w-xs bg-white border rounded-lg border-black/10 shadow-sm p-4 lg:hover:scale-110 transition duration-300"
         elevation={0}
       >
         <div className="flex items-center gap-2">
@@ -42,6 +30,6 @@ export default function RecentReviewCard({
         <h3 className="text-light-gray font-figtree text-xl">{review?.name}</h3>
         <div className="mt-2 max-w-72 line-clamp-3">{review?.text}</div>
       </Paper>
-    </motion.div>
+    </div>
   );
 }

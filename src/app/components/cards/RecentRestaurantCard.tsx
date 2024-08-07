@@ -7,27 +7,6 @@ import Image from "next/image";
 import StarRatingInput from "../rating/StarRatingInput";
 import Link from "next/link";
 
-const variants: (enterFromLeft: boolean) => Variants = (
-  enterFromLeft: boolean
-) => {
-  return {
-    hidden: {
-      opacity: 0,
-      y: 300,
-    },
-    show: {
-      opacity: 1,
-      y: 50,
-      rotate: enterFromLeft ? -2 : 2,
-      transition: {
-        type: "spring",
-        bounce: 0.4,
-        duration: 0.8,
-      },
-    },
-  };
-};
-
 export default function RecentRestaurantCard({
   id,
   name,
@@ -36,17 +15,18 @@ export default function RecentRestaurantCard({
   categories,
   description,
   images,
-  isOdd,
-}: RecentRestaurant & { isOdd: boolean }) {
+  variants,
+}: RecentRestaurant & { variants?: Variants }) {
+  console.log(variants);
+
   return (
-    <Link href={`/restaurants/${id}`} className="sticky top-32 mr-auto mb-0">
+    <Link href={`/restaurants/${id}`} className="sticky lg:static top-24">
       <motion.div
-        className="flex flex-col items-center border w-[340px] mx-auto h-[460px] bg-white rounded-[20px] shadow-[0_0_1px_rgba(0,0,0,0.075),0_0_2px_rgba(0,0,0,0.075),0_0_4px_rgba(0,0,0,0.075),0_0_8px_rgba(0,0,0,0.075),0_0_16px_rgba(0,0,0,0.075)]"
+        className="flex flex-col items-center border w-[340px] lg:w-[420px] 2xl:w-[520px] mx-auto h-[460px] bg-white rounded-[20px] shadow-[0_0_1px_rgba(0,0,0,0.075),0_0_2px_rgba(0,0,0,0.075),0_0_4px_rgba(0,0,0,0.075),0_0_8px_rgba(0,0,0,0.075),0_0_16px_rgba(0,0,0,0.075)]"
         initial="hidden"
-        // animate="show"
         whileInView={"show"}
         viewport={{ once: true, amount: 0.2 }}
-        variants={variants(isOdd)}
+        variants={variants}
       >
         <div className="w-full h-72">
           <SwiperSliderContainer>
@@ -54,7 +34,7 @@ export default function RecentRestaurantCard({
               images.map((image, index) => (
                 <SwiperSlide key={name + index}>
                   <Image
-                    className="rounded-md"
+                    className="rounded-t-md"
                     src={image}
                     alt="image"
                     fill
