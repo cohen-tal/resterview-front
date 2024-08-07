@@ -1,6 +1,5 @@
 "use client";
 import RestaurantCard from "../components/cards/RestaurantCard";
-import { useSession } from "next-auth/react";
 import RestaurantCategoriesMenu from "../components/menus/RestaurantCategoriesMenu";
 import { useEffect, useState } from "react";
 import fetchAPI from "@/utils/fetchUtil";
@@ -21,7 +20,6 @@ export default function RestaurantsPage() {
   const [isFilterOpened, setIsFilterOpened] = useState(false);
   const [selected, setSelected] = useState("");
   const [ratingFilter, setRatingFilter] = useState(0);
-  const session = useSession();
   const { data, error, isLoading } = useSWR<RestaurantCardType[]>(
     "/restaurants",
     fetchAPI

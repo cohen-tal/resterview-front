@@ -45,19 +45,9 @@ export default function Page() {
   }, [session?.accessToken?.token, session?.id]);
 
   return (
-    <div className="flex flex-col place-items-center gap-4 lg:px-52 xl:px-80 2xl:px-96 p-4 font-figtree h-full overflow-hidden">
-      <div className="flex items-center border rounded-lg p-4 w-full gap-4">
-        <Image
-          className="border rounded-full"
-          src={session?.user?.image ?? ""}
-          alt="avatar"
-          width={90}
-          height={90}
-        />
-        <h2 className="text-lg font-medium">{session?.user?.name}</h2>
-      </div>
-      <ProfileSection title="Personal Information">
-        {/* <div className="hidden lg:block p-4 w-full gap-4">
+    <div className="grid grid-rows-[auto_1fr] place-items-start gap-4 h-full lg:grid-cols-2 lg:px-44 2xl:px-96 p-4 font-figtree overflow-hidden">
+      <div className="flex flex-col place-items-center gap-2">
+        <div className="flex items-center border rounded-lg p-4 w-full gap-4">
           <Image
             className="border rounded-full"
             src={session?.user?.image ?? ""}
@@ -65,14 +55,17 @@ export default function Page() {
             width={90}
             height={90}
           />
-        </div> */}
-        <div className="grid grid-cols-2 gap-2 justify-items-center">
-          <ProfileItem content={firstName} title="First Name" />
-          <ProfileItem content={lastName} title="Last Name" />
-          <ProfileItem content={session?.user?.email} title="Email Address" />
-          <ProfileItem content="5 days ago" title="Joined" />
+          <h2 className="text-lg font-medium">{session?.user?.name}</h2>
         </div>
-      </ProfileSection>
+        <ProfileSection title="Personal Information">
+          <div className="grid grid-cols-2 gap-4 justify-items-start">
+            <ProfileItem content={firstName} title="First Name" />
+            <ProfileItem content={lastName} title="Last Name" />
+            <ProfileItem content={session?.user?.email} title="Email Address" />
+            <ProfileItem content="5 days ago" title="Joined" />
+          </div>
+        </ProfileSection>
+      </div>
       <ProfileHistoryTab
         onClickRestaurants={() => {
           setShowReviews(false);
