@@ -55,10 +55,6 @@ export default function NewReviewForm() {
         body: formData,
       });
 
-      if (!res.ok) {
-        // Handle HTTP errors
-        throw new Error(res.statusText);
-      }
       setSubmitSuccessful(true);
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -79,7 +75,6 @@ export default function NewReviewForm() {
           defaultValue={0}
           getValue={(value) => {
             setValue("rating", value);
-            console.log(value);
           }}
         />
         <InputControllerWrapper
