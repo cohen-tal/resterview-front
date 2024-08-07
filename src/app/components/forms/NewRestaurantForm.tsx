@@ -18,6 +18,7 @@ import { Alert } from "@mui/material";
 import { useSession } from "next-auth/react";
 import CategoriesPickerMenu from "../menus/CategoriesPickerMenu";
 import { useRouter } from "next/navigation";
+import fetchAPI from "@/utils/fetchUtil";
 
 const variants: Variants = {
   left: {
@@ -76,7 +77,7 @@ export default function NewRestaurantForm() {
         formData.append("categories", category)
       );
 
-      const res = await fetch("http://localhost:8080/api/v1/restaurants", {
+      const res = await fetchAPI<{ id: string }>("/restaurants", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${session?.accessToken?.token}`,
@@ -84,13 +85,7 @@ export default function NewRestaurantForm() {
         body: formData,
       });
 
-      if (!res.ok) {
-        // Handle HTTP errors
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      const jsonResponse = await res.json();
-      router.push(`/restaurants/${jsonResponse.id}`);
+      router.push(`/restaurants/${res.id}`);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
