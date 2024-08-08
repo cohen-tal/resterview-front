@@ -44,7 +44,7 @@ export default function RootLayout({
       lang="en"
       className={`${poltawoski_nowy.variable} ${roboto_mono.variable} ${roboto.variable} ${figtree.variable}`}
     >
-      <body className="font-sans overflow-x-hidden">
+      <body className="font-sans">
         <SessionProvider>
           <NextTopLoader zIndex={10000} showSpinner={false} />
           <NavBar />
