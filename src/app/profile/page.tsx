@@ -44,6 +44,13 @@ export default function Page() {
     }
   }, [session?.accessToken?.token, session?.id]);
 
+  function onDelete(reviewId: string) {
+    const updatedReviews: ReviewAPI[] = reviewsHistory.filter(
+      (review) => review.id !== reviewId
+    );
+    setReviewsHistory(updatedReviews);
+  }
+
   return (
     <div className="grid grid-rows-[auto_1fr] place-items-start gap-4 h-full lg:grid-cols-2 lg:px-44 2xl:px-96 p-4 font-figtree overflow-hidden">
       <div className="flex flex-col place-items-center gap-2">
@@ -76,7 +83,12 @@ export default function Page() {
       >
         {showReviews &&
           reviewsHistory.map((review) => (
-            <FullReviewCard key={review.id} isHistoryCard review={review} />
+            <FullReviewCard
+              key={review.id}
+              isHistoryCard
+              review={review}
+              onDelete={onDelete}
+            />
           ))}
 
         {!showReviews &&

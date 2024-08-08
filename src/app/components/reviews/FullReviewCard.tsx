@@ -18,11 +18,13 @@ interface ReviewCardProps {
   review: ReviewAPI;
   isHistoryCard?: boolean;
   onEdit?: () => void;
+  onDelete?: (reviewId: string) => void;
 }
 
 export default function FullReviewCard({
   review,
   onEdit,
+  onDelete,
   isHistoryCard = false,
 }: ReviewCardProps) {
   const { data: session } = useSession();
@@ -173,7 +175,10 @@ export default function FullReviewCard({
           <div className="flex place-items-center gap-2 p-2">
             <button
               className="w-full border rounded-lg p-1 bg-red-300"
-              onClick={handleDelete}
+              onClick={() => {
+                handleDelete().then(() => onDelete?.(review.id));
+                setDeleteReview(false);
+              }}
             >
               Yes
             </button>
