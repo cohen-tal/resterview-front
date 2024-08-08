@@ -34,7 +34,7 @@ export default function RecentRestaurantsContainer({
   console.log(isDesktop);
 
   return (
-    <section className="w-full shadow-sm pb-80 lg:pb-0">
+    <section className="w-full shadow-sm pb-80 lg:pb-24">
       <h2 className="p-4 text-black/70 drop-shadow-md font-bold text-2xl">
         Newest Restaurants
       </h2>
