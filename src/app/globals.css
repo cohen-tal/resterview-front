@@ -12,7 +12,7 @@ body {
 
 body {
   /* position: relative; Ensures positioned elements behave as expected */
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 /* body {
@@ -71,6 +71,4 @@ body {
 
 * {
   box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
 }

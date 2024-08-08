@@ -19,7 +19,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="main dark:bg-slate-900 overflow-x-hidden">
+    <main className="main dark:bg-slate-900 overflow-hidden">
       <div className="relative flex flex-col items-center justify-center w-full h-80 lg:h-[40rem]">
         <h1
           className="font-sedan-sc whitespace-pre-wrap md:whitespace-normal lg:-mt-56 text-floral_white p-8 font-bold text-3xl lg:text-6xl z-50"

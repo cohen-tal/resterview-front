@@ -31,7 +31,6 @@ export default function RecentRestaurantsContainer({
   recents,
 }: RecentRestaurantsContainerProps) {
   const isDesktop = useMediaQuery("(min-width:800px)");
-  console.log(isDesktop);
 
   return (
     <section className="w-full shadow-sm pb-80 lg:pb-24">
