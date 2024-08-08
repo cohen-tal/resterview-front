@@ -65,7 +65,7 @@ export default function RestaurantsPage() {
         <NotFoundAfterLoading />
       )}
       {
-        <div className="grid grid-flow-row place-items-center pl-2 pr-2 gap-8 lg:grid-cols-3 md:pl-16 md:pr-16 xl:grid-cols-4 w-full">
+        <div className="grid grid-flow-row place-items-center pl-2 pr-2 gap-8 lg:grid-cols-3 lg:pl-16 lg:pr-16 2xl:grid-cols-4 w-full">
           {isLoading && <RestaurantCardSkeleton />}
           {restaurantCards &&
             restaurantCards.length > 0 &&
