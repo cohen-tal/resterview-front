@@ -3,6 +3,7 @@ import "./globals.css";
 import { Poltawski_Nowy, Roboto_Mono, Roboto, Figtree } from "next/font/google";
 import NavBar from "./components/navbar/NavBar";
 import { SessionProvider } from "next-auth/react";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: "StarBite Reviews",
@@ -45,6 +46,7 @@ export default function RootLayout({
     >
       <body className="font-sans overflow-x-hidden min-h-screen">
         <SessionProvider>
+          <NextTopLoader zIndex={10000} showSpinner={false} />
           <NavBar />
           {children}
         </SessionProvider>
