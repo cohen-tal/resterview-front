@@ -53,7 +53,7 @@ export default function RestaurantsPage() {
   }
 
   return (
-    <div className="flex flex-col place-items-center p-2 gap-2 w-full">
+    <div className="flex flex-col items-center p-2 gap-2 w-full">
       <RestaurantCategoriesMenu
         onCategoryClick={handleCategoryClick}
         onFilterButtonClick={() => {
