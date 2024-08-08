@@ -21,7 +21,7 @@ export default function NavBar() {
         </Link>
         <SearchBox />
         <BurgerMenu />
-        <DesktopMenu />
+        {/* <DesktopMenu /> */}
       </div>
     </nav>
   );
