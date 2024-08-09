@@ -44,14 +44,14 @@ export default function RootLayout({
       lang="en"
       className={`${poltawoski_nowy.variable} ${roboto_mono.variable} ${roboto.variable} ${figtree.variable}`}
     >
-      <head>
+      {/* <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </head>
+      </head> */}
       <body className="font-sans">
         <SessionProvider>
           <NextTopLoader zIndex={10000} showSpinner={false} />
           <NavBar />
-          {children}
+          <div className="mt-16">{children}</div>
         </SessionProvider>
       </body>
     </html>
