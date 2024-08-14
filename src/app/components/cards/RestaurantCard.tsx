@@ -15,10 +15,10 @@ export default function RestaurantCard({
 }: RestaurantCardProps) {
   return (
     <Link
-      className="flex flex-col items-center justify-center border rounded-xl w-full max-w-[398px] max-h-[440px] shadow-md md:hover:scale-110 ease-in-out duration-300"
+      className="flex flex-col flex-shrink-0 h-full items-center justify-center border rounded-xl overflow-hidden w-full max-w-[398px] max-h-[440px] shadow-md lg:hover:shadow-lg"
       href={`/restaurants/${id}`}
     >
-      <div className="w-full h-48">
+      <div className="w-full h-full min-h-48">
         <SwiperSliderContainer>
           {images.length > 0 ? (
             images.map((image, index) => (

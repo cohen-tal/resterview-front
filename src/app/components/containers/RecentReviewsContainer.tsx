@@ -9,7 +9,7 @@ export default function RecentReviewsContainer({
   reviews: RecentReview[];
 }) {
   return (
-    <div className="p-4 flex flex-col mr-auto w-full">
+    <div className="p-4 flex flex-col mr-auto w-full overflow-x-hidden">
       <div className="font-semibold">
         <h2 className="text-black/70 drop-shadow-md font-anton font-bold text-2xl">
           Recent Reviews
@@ -19,13 +19,11 @@ export default function RecentReviewsContainer({
         className="flex gap-4 py-6 w-fit"
         initial={{ x: 0 }}
         animate={{ x: "calc(-50% - 0.5rem)" }}
-        transition={{ ease: "linear", duration: "30", repeat: Infinity }}
+        transition={{ ease: "linear", duration: "20", repeat: Infinity }}
       >
         {reviews &&
           [...reviews, ...reviews].map((review, index) => (
-            <div key={index}>
-              <RecentReviewCard review={review} />
-            </div>
+            <RecentReviewCard key={index} review={review} />
           ))}
       </motion.div>
     </div>

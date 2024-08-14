@@ -33,11 +33,11 @@ export default function RecentRestaurantsContainer({
   const isDesktop = useMediaQuery("(min-width:800px)");
 
   return (
-    <section className="w-full shadow-sm pb-80 lg:pb-24">
+    <section className="w-full pb-4 lg:pb-24">
       <h2 className="p-4 text-black/70 drop-shadow-md font-bold text-2xl">
         Newest Restaurants
       </h2>
-      <div className="relative lg:grid lg:grid-cols-3 lg:place-items-center text-center w-full">
+      <div className=" lg:grid lg:grid-cols-3 lg:place-items-center text-center w-full">
         {recents.map((restaurant, index) => (
           <RecentRestaurantCard
             key={restaurant.id}
