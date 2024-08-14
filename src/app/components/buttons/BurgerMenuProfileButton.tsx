@@ -5,15 +5,23 @@ import { MdArrowForwardIos } from "react-icons/md";
 interface BurgerMenuProfileButtonProps {
   src: string;
   name: string;
+  onClick: VoidFunction;
 }
 
 export default function BurgerMenuProfileButton({
   src,
   name,
+  onClick,
 }: BurgerMenuProfileButtonProps) {
   return (
     <div className="self-center w-[85%]">
-      <Link href="/profile">
+      <Link
+        href="/profile"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+      >
         <div className="relative flex justify-center items-center gap-4 p-4 border rounded-lg shadow-lg">
           <div className="relative w-[60px] h-[60px]">
             <Image
