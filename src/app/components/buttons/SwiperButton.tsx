@@ -4,9 +4,13 @@ import { useSwiper } from "swiper/react";
 
 interface SwiperButtonProps {
   direction: "next" | "prev";
+  className?: string;
 }
 
-export default function SwiperButton({ direction }: SwiperButtonProps) {
+export default function SwiperButton({
+  direction,
+  className,
+}: SwiperButtonProps) {
   const swiper = useSwiper();
 
   function handleNext(e: React.MouseEvent) {
@@ -20,9 +24,9 @@ export default function SwiperButton({ direction }: SwiperButtonProps) {
 
   return (
     <button
-      className={`absolute top-1/2 -translate-y-1/2 z-50 border rounded-full opacity-50 md:hover:opacity-100 bg-slate-50 shadow-md ${
+      className={`absolute top-1/2 -translate-y-1/2 z-50 border rounded-full opacity-70 md:hover:opacity-100 bg-slate-50 shadow-md ${
         direction === "next" ? "right-2" : "left-2"
-      }`}
+      } ${className}`}
       onClick={
         direction === "next"
           ? (e) => {
