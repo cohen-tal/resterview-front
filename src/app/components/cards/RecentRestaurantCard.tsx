@@ -17,12 +17,10 @@ export default function RecentRestaurantCard({
   images,
   variants,
 }: RecentRestaurant & { variants?: Variants }) {
-  console.log(variants);
-
   return (
-    <Link href={`/restaurants/${id}`} className="sticky lg:static top-24">
+    <Link href={`/restaurants/${id}`}>
       <motion.div
-        className="flex flex-col items-center border w-[340px] lg:w-[420px] 2xl:w-[520px] mx-auto h-[460px] bg-white rounded-[20px] shadow-[0_0_1px_rgba(0,0,0,0.075),0_0_2px_rgba(0,0,0,0.075),0_0_4px_rgba(0,0,0,0.075),0_0_8px_rgba(0,0,0,0.075),0_0_16px_rgba(0,0,0,0.075)]"
+        className="sticky top-24 flex flex-col items-center border rounded-xl w-[340px] lg:w-[420px] 2xl:w-[520px] lg:hover:scale-105 duration-200 mx-auto h-[460px] bg-white shadow-md"
         initial="hidden"
         whileInView={"show"}
         viewport={{ once: true, amount: 0.2 }}
