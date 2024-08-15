@@ -26,13 +26,15 @@ export default function ImageUpload({
         className="flex flex-col items-center justify-center w-full border border-dashed hover:cursor-pointer transition-all duration-300 flex-1"
         onClick={() => ref.current?.click()}
       >
-        <UploadFileIcon fontSize="large" />
-        <label
-          className={`${error ? "text-red-400" : ""}`}
-          htmlFor="image_uploads"
-        >
-          {error ? error : "Drag or Drop image files."}
-        </label>
+        <div className="flex flex-col place-items-center gap-2">
+          <UploadFileIcon fontSize="large" />
+          <label
+            className={`${error ? "text-red-400" : ""}`}
+            htmlFor="image_uploads"
+          >
+            {error ? error : "Drag or Drop image files."}
+          </label>
+        </div>
       </div>
       <input
         name="image_uploads"
@@ -43,7 +45,7 @@ export default function ImageUpload({
         ref={ref}
         onChange={handleUpload}
       />
-      <div className="flex-1 w-full grid gap-4 p-3 grid-cols-3 justify-items-center">
+      <div className="flex-1 w-full grid gap-10 p-3 grid-cols-3 justify-items-center">
         {value.map((image, index) => (
           <PreviewImage
             key={image.name}
