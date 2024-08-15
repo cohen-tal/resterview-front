@@ -41,11 +41,7 @@ export default function ProfileHistoryTab({
           </div>
         ))}
       </div>
-      <div
-        className={`grid gap-3 p-3 w-full overflow-auto grid-cols-1 place-items-center lg:${
-          selected === "Reviews" ? "grid-cols-1" : "grid-cols-2"
-        }`}
-      >
+      <div className="flex flex-col gap-5 p-3 w-full overflow-y-auto overflow-x-hidden place-items-center">
         {children}
       </div>
     </div>
