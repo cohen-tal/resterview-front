@@ -18,7 +18,7 @@ export default function CategoryPickerItem({
   return (
     <button
       value={value}
-      className={`relative border rounded-md pt-1 pb-1 text-light-gray hover:bg-slate-300 ${
+      className={`relative border rounded-md pt-1 pb-1 text-light-gray lg:hover:bg-slate-300 ${
         isPicked ? "bg-emerald-200" : ""
       }`}
       onClick={() => {
@@ -28,8 +28,8 @@ export default function CategoryPickerItem({
     >
       {text}
       {isPicked && (
-        <button
-          className="absolute rounded-full top-1 right-1 translate-x-1/2 -translate-y-1/2 text-white bg-red-400"
+        <div
+          className="absolute rounded-full cursor-pointer top-1 right-1 translate-x-1/2 -translate-y-1/2 text-white bg-red-400"
           onClick={(e) => {
             e.stopPropagation();
             setIsPicked(false);
@@ -37,7 +37,7 @@ export default function CategoryPickerItem({
           }}
         >
           <IoClose />
-        </button>
+        </div>
       )}
     </button>
   );
