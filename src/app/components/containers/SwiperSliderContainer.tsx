@@ -1,31 +1,25 @@
-import { Swiper, SwiperClass, SwiperRef, useSwiper } from "swiper/react";
 import "swiper/css";
-import { ReactNode, useState, useRef } from "react";
-import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { Swiper } from "swiper/react";
+import { ReactNode, useState } from "react";
 import SwiperButton from "../buttons/SwiperButton";
 
 interface SwiperSliderContainerProps {
   children?: ReactNode;
-  roundedBottom?: boolean;
 }
 
 export default function SwiperSliderContainer({
   children,
-  roundedBottom = false,
 }: SwiperSliderContainerProps) {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [maxSlides, setMaxSlides] = useState<number>(1);
-  const swiper = useSwiper();
 
   return (
     <div className="relative w-full h-full">
       <Swiper
-        className={`flex items-center justify-center w-full h-full rounded-t-xl ${
-          roundedBottom ? "rounded-b-md" : ""
-        }`}
+        className="flex justify-center w-full h-full"
         spaceBetween={50}
-        slidesPerView={1}
-        zoom={false}
+        slidesPerView={"auto"}
+        centeredSlides={true}
         onSlideChange={(swiper) => {
           setCurrentSlide(swiper.realIndex + 1);
         }}
