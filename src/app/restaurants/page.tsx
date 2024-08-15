@@ -62,7 +62,7 @@ export default function RestaurantsPage() {
         }}
       />
       {!isLoading && restaurantCards && restaurantCards?.length < 1 && (
-        <NotFoundAfterLoading />
+        <NotFoundAfterLoading href="/restaurants/new" />
       )}
       {
         <div className="grid grid-flow-row place-items-center pl-2 pr-2 gap-8 lg:grid-cols-3 lg:pl-16 lg:pr-16 2xl:grid-cols-4 w-full">
