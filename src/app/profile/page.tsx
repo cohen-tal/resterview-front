@@ -52,8 +52,6 @@ export default function Page() {
     setReviewsHistory(updatedReviews);
   }
 
-  console.log(restaurantsHistory);
-
   return (
     <div className="grid grid-rows-[auto_1fr] gap-4 h-full lg:grid-cols-2 lg:px-44 2xl:px-96 p-4 font-figtree overflow-hidden">
       <div className="flex flex-col place-items-center gap-2">
