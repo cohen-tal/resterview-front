@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { memo, useMemo } from "react";
+import { IoClose } from "react-icons/io5";
 
 interface PreviewImageProps {
   image: File;
@@ -26,14 +27,14 @@ function PreviewImage({ image, size, onDelete }: PreviewImageProps) {
           fill
           style={{ objectFit: "cover" }}
         />
+        <button
+          type="button"
+          className="absolute -top-2 -right-2 rounded-full bg-red-400 text-white font-semibold font-roboto"
+          onClick={onDelete}
+        >
+          <IoClose size={24} />
+        </button>
       </div>
-      <button
-        type="button"
-        className="w-full bg-red-400 text-white font-semibold font-roboto"
-        onClick={onDelete}
-      >
-        Delete
-      </button>
     </motion.div>
   );
 }
