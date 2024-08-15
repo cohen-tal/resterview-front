@@ -4,7 +4,17 @@ import thinkingAnimation from "../../../../public/lottie/thinking-animation.json
 import Link from "next/link";
 import { IoMdAdd } from "react-icons/io";
 
-export default function NotFoundAfterLoading() {
+interface NotFoundAfterLoadingProps {
+  href: string;
+  width?: number | string;
+  height?: number | string;
+}
+
+export default function NotFoundAfterLoading({
+  width = 414,
+  height = 414,
+  href,
+}: NotFoundAfterLoadingProps) {
   return (
     <div>
       <Lottie
@@ -14,14 +24,14 @@ export default function NotFoundAfterLoading() {
           loop: true,
           rendererSettings: { className: "hover:cursor-default" },
         }}
-        height={414}
-        width={414}
+        height={height}
+        width={width}
         isClickToPauseDisabled
       />
       <div className="flex flex-col place-items-center gap-1 flex-nowrap text-lg text-light-gray font-medium font-roboto">
         {`Uh Oh! It seems there's nothing to show.`}
         <Link
-          href="/restaurants/new"
+          href={href}
           className="flex gap-1 place-items-center border rounded-lg p-3 shadow-md bg-purple-500 lg:hover:bg-purple-700 text-white"
         >
           <IoMdAdd size={24} />
