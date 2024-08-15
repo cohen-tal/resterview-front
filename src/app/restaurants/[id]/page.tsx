@@ -82,9 +82,11 @@ export default function RestaurantPage() {
 
   return (
     <>
-      <div className="w-full h-[320px] 2xl:h-[500px] lg:h-[380px]">
-        <SwiperSliderContainer>{renderImages()}</SwiperSliderContainer>
-      </div>
+      {restaurant.images.length > 0 && (
+        <div className="w-full h-[320px] 2xl:h-[500px] lg:h-[380px]">
+          <SwiperSliderContainer>{renderImages()}</SwiperSliderContainer>
+        </div>
+      )}
       <div className="lg:p-40 2xl:p-80 2xl:pt-4 lg:pt-4">
         <div className="flex flex-col font-figtree self-center justify-center gap-2 p-6 pt-0 lg:p-0">
           <div className="pt-6 pb-6">
@@ -136,15 +138,17 @@ export default function RestaurantPage() {
                 <ReviewCard key={review.id + review.rating} review={review} />
               ))}
             </div>
-            <button
-              className="p-1 border rounded-lg w-full shadow-md hover:scale-105 md:hover:bg-slate-600 hover:text-white duration-300"
-              onClick={() => {
-                document.body.style.overflow = "hidden";
-                setIsOpen(true);
-              }}
-            >
-              See all reviews
-            </button>
+            {restaurant.reviews.length > 0 && (
+              <button
+                className="p-1 border rounded-lg w-full shadow-md hover:scale-105 md:hover:bg-slate-600 hover:text-white duration-300"
+                onClick={() => {
+                  document.body.style.overflow = "hidden";
+                  setIsOpen(true);
+                }}
+              >
+                See all reviews
+              </button>
+            )}
           </div>
         </div>
         {restaurant && (
