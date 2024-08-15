@@ -89,7 +89,7 @@ export default function AccountDropdownMenu({
                     onClickLogout();
                   }}
                 >
-                  Logout
+                  Log out
                 </button>
               </li>
             </ul>
