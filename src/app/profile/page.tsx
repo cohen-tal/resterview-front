@@ -9,6 +9,7 @@ import RestaurantCard from "../components/cards/RestaurantCard";
 import { RestaurantCardType, ReviewAPI, UserProfileData } from "../../../d";
 import { useEffect, useState } from "react";
 import fetchAPI from "@/utils/fetchUtil";
+import NotFoundAfterLoading from "../components/loading/NotFoundAfterLoading";
 
 export default function Page() {
   const { data: session } = useSession();
@@ -50,6 +51,8 @@ export default function Page() {
     );
     setReviewsHistory(updatedReviews);
   }
+
+  console.log(restaurantsHistory);
 
   return (
     <div className="grid grid-rows-[auto_1fr] gap-4 h-full lg:grid-cols-2 lg:px-44 2xl:px-96 p-4 font-figtree overflow-hidden">
@@ -97,20 +100,26 @@ export default function Page() {
           setShowReviews(true);
         }}
       >
-        {showReviews &&
-          reviewsHistory.map((review) => (
-            <FullReviewCard
-              key={review.id}
-              isHistoryCard
-              review={review}
-              onDelete={onDelete}
-            />
-          ))}
-
-        {!showReviews &&
+        {showReviews ? (
+          reviewsHistory.length > 0 ? (
+            reviewsHistory.map((review) => (
+              <FullReviewCard
+                key={review.id}
+                isHistoryCard
+                review={review}
+                onDelete={onDelete}
+              />
+            ))
+          ) : (
+            <NotFoundAfterLoading href="/restaurants" />
+          )
+        ) : restaurantsHistory.length > 0 ? (
           restaurantsHistory.map((rest) => (
             <RestaurantCard key={rest.id} {...rest} />
-          ))}
+          ))
+        ) : (
+          <NotFoundAfterLoading href="/restaurants/new" />
+        )}
       </ProfileHistoryTab>
     </div>
   );
