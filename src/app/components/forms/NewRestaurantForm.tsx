@@ -19,6 +19,7 @@ import { useSession } from "next-auth/react";
 import CategoriesPickerMenu from "../menus/CategoriesPickerMenu";
 import { useRouter } from "next/navigation";
 import fetchAPI from "@/utils/fetchUtil";
+import FoodAnimationLoader from "../loading/FoodAnimationLoader";
 
 const variants: Variants = {
   left: {
@@ -140,7 +141,7 @@ export default function NewRestaurantForm() {
 
   return (
     <>
-      <div className="relative flex flex-col items-center justify-center w-96 lg:w-[45%] h-[500px] border m-auto mt-12 rounded-lg shadow-lg overflow-hidden">
+      <div className="relative flex flex-col items-center justify-center w-96 lg:w-[45%] h-[500px] border m-auto mt-24 rounded-lg shadow-lg overflow-hidden">
         <FormStepper stepToAnimate={step} />
         <div className="relative w-full h-full overflow-hidden">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -258,7 +259,6 @@ export default function NewRestaurantForm() {
               animate={direction[2]}
               variants={variants}
             >
-              {/* <ImageUpload /> */}
               <Controller
                 name="images"
                 control={control}
@@ -270,7 +270,11 @@ export default function NewRestaurantForm() {
                   />
                 )}
               />
-              <SubmitFormButton submitting={isSubmitting} showText={false} />
+              {true ? (
+                <FoodAnimationLoader />
+              ) : (
+                <SubmitFormButton submitting={isSubmitting} />
+              )}
             </motion.div>
           </form>
         </div>
@@ -280,7 +284,7 @@ export default function NewRestaurantForm() {
         open={isSubmitSuccessful || errors.images ? true : false}
         autoHideDuration={2000}
         onClose={() => {
-          clearErrors("images");
+          // clearErrors("images");
         }}
       >
         {isSubmitSuccessful ? (
@@ -289,7 +293,7 @@ export default function NewRestaurantForm() {
           </Alert>
         ) : (
           <Alert severity="error" variant="filled" sx={{ width: "100%" }}>
-            Image size must be at most 3 MB.
+            Image size must be at most 5 MB.
           </Alert>
         )}
       </Snackbar>
