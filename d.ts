@@ -70,6 +70,11 @@ export interface RestaurantAPI {
   dateEdited: string | Date | null;
 }
 
+export interface SearchResults
+  extends Pick<RestaurantAPI, "address" | "id" | "name"> {
+  image: string | null;
+}
+
 export interface ReviewAPI {
   id: string;
   text: string;
