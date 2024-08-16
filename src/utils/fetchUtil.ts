@@ -5,15 +5,10 @@ interface ResponseFromAPI<T> {
   statusCode: string | number;
 }
 
-export default async function fetchAPI<
-  T extends
-    | RestaurantAPI
-    | ReviewAPI
-    | RestaurantAPI[]
-    | RestaurantCardType[]
-    | Recents
-    | any = any
->(endpoint: string, init?: RequestInit): Promise<T> {
+export default async function fetchAPI<T extends unknown = any>(
+  endpoint: string,
+  init?: RequestInit
+): Promise<T> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
   const url = apiUrl + "/api/v1" + endpoint;
 
