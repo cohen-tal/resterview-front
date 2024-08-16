@@ -1,4 +1,4 @@
-import SearchIcon from "@mui/icons-material/Search";
+import { IoMdSearch } from "react-icons/io";
 
 interface SearchBoxProps {
   placeholder?: string;
@@ -21,7 +21,7 @@ export default function SearchBox({
           onSelect={onSelect}
         />
         <button className="bg-[#20262f] p-3 rounded-r-full lg:rounded-r-md h-full flex items-center justify-center">
-          <SearchIcon className="text-white" />
+          <IoMdSearch className="text-white" />
         </button>
       </div>
     </div>
