@@ -5,7 +5,6 @@ import RecentRestaurantsContainer from "./components/containers/RecentRestaurant
 import { useEffect, useState } from "react";
 import fetchAPI from "@/utils/fetchUtil";
 import { RecentRestaurant, RecentReview, Recents } from "../../d";
-import Footer from "./components/footer/Footer";
 
 export default function Home() {
   const [recentReviews, setRecentReviews] = useState<RecentReview[]>();
@@ -45,7 +44,6 @@ export default function Home() {
           <RecentRestaurantsContainer recents={recentRestaurants ?? []} />
         </section>
       </main>
-      <Footer />
     </>
   );
 }
