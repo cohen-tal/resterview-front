@@ -4,6 +4,7 @@ import { Poltawski_Nowy, Roboto_Mono, Roboto, Figtree } from "next/font/google";
 import NavBar from "./components/navbar/NavBar";
 import { SessionProvider } from "next-auth/react";
 import NextTopLoader from "nextjs-toploader";
+import Footer from "./components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "StarBite Reviews",
@@ -48,7 +49,10 @@ export default function RootLayout({
         <SessionProvider>
           <NextTopLoader zIndex={10000} showSpinner={false} />
           <NavBar />
-          <div className="mt-16 w-full h-full">{children}</div>
+          <div className="mt-16 w-full h-full">
+            {children}
+            <Footer />
+          </div>
         </SessionProvider>
       </body>
     </html>
