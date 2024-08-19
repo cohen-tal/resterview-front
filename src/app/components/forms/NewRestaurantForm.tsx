@@ -273,7 +273,7 @@ export default function NewRestaurantForm() {
                   />
                 )}
               />
-              {true ? (
+              {isSubmitting ? (
                 <FoodAnimationLoader />
               ) : (
                 <SubmitFormButton submitting={isSubmitting} />
