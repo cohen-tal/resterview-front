@@ -117,6 +117,7 @@ export default function RestaurantsPage() {
           />
         </FilterMenuSection>
       </FilterMenu>
+      <div className="h-96" />
     </div>
   );
 }
