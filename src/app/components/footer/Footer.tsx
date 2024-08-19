@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-300 w-full text-center py-8 mt-12 lg:mt-2">
+    <footer className="bg-gray-300 w-full text-center py-8 mt-24 lg:mt-2">
       <div className="text-3xl font-semibold text-gray-700 mb-4">
         StarBite Reviews
       </div>
