@@ -49,10 +49,9 @@ export default function RootLayout({
         <SessionProvider>
           <NextTopLoader zIndex={10000} showSpinner={false} />
           <NavBar />
-          <div className="mt-16 w-full h-full">
-            {children}
-            <Footer />
-          </div>
+          <div className="mt-16" />
+          {children}
+          <Footer />
         </SessionProvider>
       </body>
     </html>
