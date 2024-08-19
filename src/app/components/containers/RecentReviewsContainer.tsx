@@ -16,7 +16,7 @@ export default function RecentReviewsContainer({
         </h2>
       </div>
       <motion.div
-        className="flex gap-4 py-6 w-fit"
+        className="flex items-start gap-4 py-6 w-fit"
         initial={{ x: 0 }}
         animate={{ x: "calc(-50% - 0.5rem)" }}
         transition={{ ease: "linear", duration: "20", repeat: Infinity }}

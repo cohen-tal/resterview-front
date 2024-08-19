@@ -11,24 +11,32 @@ interface RecentReviewCardProps {
 
 export default function RecentReviewCard({ review }: RecentReviewCardProps) {
   return (
-    <div className="flex justify-center rounded-xl hover:shadow-xl">
+    <div className="flex justify-center flex-auto h-auto rounded-xl hover:shadow-xl">
       <div className="w-[400px] border rounded-xl border-black/10 shadow-md p-4 transition duration-300">
         <div className="flex items-center gap-2">
-          <Avatar src={review?.image} alt="user-avatar" />
-          <div className="relative w-28 h-6">
-            <StarRatingInput
-              readOnly
-              ratingType="stars"
-              defaultValue={review?.rating}
-            />
+          <Avatar src={review?.authorImage} alt="user-avatar" />
+          <div className="flex justify-between w-full">
+            <h3 className="text-light-gray font-figtree text-xl">
+              {review?.authorName}
+            </h3>
+            <div className="relative w-28 h-6">
+              <StarRatingInput
+                readOnly
+                ratingType="stars"
+                defaultValue={review?.rating}
+              />
+            </div>
           </div>
         </div>
-        <h3 className="text-light-gray font-figtree text-xl">{review?.name}</h3>
+
         <div className="mt-2 max-w-72 line-clamp-4">{review?.text}</div>
-        <ImagesGridContainer
-          userImage={review?.image ?? ""}
-          userName={review?.name!}
-        />
+        {review?.images && review.images.length > 0 && (
+          <ImagesGridContainer
+            userImage={review?.authorImage ?? ""}
+            userName={review?.authorName!}
+            images={review?.images ?? []}
+          />
+        )}
       </div>
     </div>
   );

@@ -4,39 +4,8 @@ import { debounce } from "lodash";
 import { IoMdSearch } from "react-icons/io";
 import fetchAPI from "@/utils/fetchUtil";
 import { SearchResults } from "../../../../d";
-import Image from "next/image";
-import Link from "next/link";
 import { IoClose } from "react-icons/io5";
-
-function RestaurantResult({
-  id,
-  address,
-  name,
-  image,
-  onClick,
-}: SearchResults & { onClick: VoidFunction }) {
-  return (
-    <Link
-      href={`/restaurants/${id}`}
-      className="flex items-center w-full gap-2 mx-4 mt-4"
-      onClick={onClick}
-    >
-      {image && (
-        <div className="relative w-12 h-12 rounded-lg overflow-hidden">
-          <Image src={image} alt={name} fill />
-        </div>
-      )}
-      <div className="flex flex-col min-w-0">
-        <span className="text-light-gray text-lg font-roboto font-normal">
-          {name}
-        </span>
-        <span className="text-gray-500 text-sm break-words overflow-hidden">
-          {address}
-        </span>
-      </div>
-    </Link>
-  );
-}
+import RestaurantSearchResult from "./RestaurantSearchResult";
 
 // interface SearchBoxMobileProps {
 //   open: boolean;
@@ -120,7 +89,7 @@ export default function SearchBoxMobile() {
           <div className="flex flex-col w-full h-full overflow-y-auto overflow-x-hidden bg-white gap-3">
             {results.length > 0
               ? results.map((result) => (
-                  <RestaurantResult
+                  <RestaurantSearchResult
                     key={result.id}
                     onClick={() => {
                       setIsOpen(false);

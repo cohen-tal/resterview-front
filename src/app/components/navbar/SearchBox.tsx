@@ -1,29 +1,75 @@
+"use client";
+import fetchAPI from "@/utils/fetchUtil";
+import { debounce } from "lodash";
+import { useState, useCallback, useEffect } from "react";
 import { IoMdSearch } from "react-icons/io";
+import { SearchResults } from "../../../../d";
+import { ClickAwayListener } from "@mui/material";
+import RestaurantSearchResult from "./RestaurantSearchResult";
 
-interface SearchBoxProps {
-  placeholder?: string;
-  onChange?: () => void;
-  onSelect?: () => void;
-}
+export default function SearchBox() {
+  const [params, setParams] = useState("");
+  const [results, setResults] = useState<SearchResults[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
-export default function SearchBox({
-  placeholder = "Search restaurants",
-  onChange,
-  onSelect,
-}: SearchBoxProps) {
+  const handleChange = useCallback(
+    debounce((value: string) => {
+      setParams(value);
+    }, 300),
+    []
+  );
+
+  useEffect(() => {
+    async function search(params: string) {
+      return fetchAPI<SearchResults[]>(`/search?q=${params}`);
+    }
+
+    if (params !== "") {
+      search(params).then((results) => {
+        setResults(results);
+      });
+    } else {
+      setResults([]);
+    }
+  }, [params]);
+
+  console.log(isOpen, results);
+
   return (
-    <div className="relative flex flex-col border items-center min-w-48 w-54 lg:w-[40%] lg:rounded-md rounded-full">
-      <div className="flex items-center shadow-inner w-full lg:rounded-md rounded-full h-12 lg:shadow-lg">
+    <div className="hidden relative lg:flex flex-col border items-center min-w-48 w-54 lg:w-[40%] lg:rounded-md rounded-full">
+      <div className="flex items-center w-full rounded-md h-12 shadow-lg">
+        <IoMdSearch size={24} className="text-light-gray ml-2" />
         <input
           className="text-gray-600 w-full p-2 h-full text-lg focus:outline-none lg:rounded-md rounded-full border-none"
-          placeholder={placeholder}
-          onChange={onChange}
-          onSelect={onSelect}
+          placeholder="Search restaurants..."
+          onChange={(e) => {
+            handleChange(e.currentTarget.value);
+          }}
+          onClick={(e) => {
+            setIsOpen(true);
+          }}
         />
-        <button className="bg-[#20262f] p-3 rounded-r-full lg:rounded-r-md h-full flex items-center justify-center">
-          <IoMdSearch className="text-white" />
-        </button>
       </div>
+      {isOpen && results.length > 0 ? (
+        <ClickAwayListener
+          onClickAway={(e) => {
+            e.preventDefault();
+            setIsOpen(false);
+          }}
+        >
+          <div className="absolute flex flex-col top-full mt-1 w-full max-h-96 overflow-y-auto overflow-x-hidden bg-white border rounded-md">
+            {results.map((result) => (
+              <RestaurantSearchResult
+                key={result.id}
+                {...result}
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+              />
+            ))}
+          </div>
+        </ClickAwayListener>
+      ) : null}
     </div>
   );
 }

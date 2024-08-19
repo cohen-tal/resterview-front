@@ -15,12 +15,11 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import fetchAPI from "@/utils/fetchUtil";
 
-async function fetchRestaurant(id: string, token: string): Promise<Restaurant> {
-  const restaurantAPI = await fetchAPI<RestaurantAPI>(`/restaurants/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+async function fetchRestaurant(
+  id: string,
+  token?: string
+): Promise<Restaurant> {
+  const restaurantAPI = await fetchAPI<RestaurantAPI>(`/restaurants/${id}`);
 
   /* TODO: add parsing method that will parse the dates and nested dates from string to date objects.
   Currently components using Restaurant as prop convert the string to new Date */
@@ -53,12 +52,10 @@ export default function RestaurantPage() {
 
   const handleFetching = useCallback(() => {
     const restaurantId: string = id as string;
-    if (session?.accessToken) {
-      fetchRestaurant(restaurantId, session.accessToken.token)
-        .then((res) => setRestaurant(res))
-        .catch((reason) => console.log(reason));
-    }
-  }, [id, session?.accessToken]);
+    fetchRestaurant(restaurantId)
+      .then((res) => setRestaurant(res))
+      .catch((reason) => console.log(reason));
+  }, [id]);
 
   useEffect(() => {
     handleFetching();
@@ -71,7 +68,7 @@ export default function RestaurantPage() {
   function renderImages() {
     return restaurant?.images.map((image, index) => (
       <SwiperSlide key={index}>
-        <Image src={image} alt="image" fill style={{ objectFit: "cover" }} />
+        <Image src={image} alt="image" fill quality={100} />
       </SwiperSlide>
     ));
   }

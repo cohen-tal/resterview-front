@@ -66,7 +66,10 @@ export default function NewRestaurantForm() {
       const formData = new FormData();
 
       formData.append("name", data.name);
-      formData.append("address", data.address);
+
+      const addr = data.address.split(",");
+      formData.append("address", addr[0] + addr[1]);
+
       formData.append("lat", String(data.lat));
       formData.append("lng", String(data.lng));
 

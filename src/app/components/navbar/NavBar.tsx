@@ -11,7 +11,7 @@ export default function NavBar() {
       <div className="flex items-center justify-between flex-1 gap-4 border-b h-16 p-1">
         <Link href={"/"} className="mr-6 mb-3">
           <Image
-            className="ml-4"
+            className="ml-4 mt-1"
             src="/logo.png"
             alt="logo"
             width={100}
@@ -20,8 +20,8 @@ export default function NavBar() {
             priority={true}
           />
         </Link>
-        {/* <SearchBox /> */}
-        <div className="flex place-items-center gap-2">
+        <SearchBox />
+        <div className="flex place-items-center gap-2 lg:hidden">
           <SearchBoxMobile />
           <BurgerMenu />
         </div>

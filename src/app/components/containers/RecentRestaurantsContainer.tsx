@@ -33,7 +33,7 @@ export default function RecentRestaurantsContainer({
   const isDesktop = useMediaQuery("(min-width:800px)");
 
   return (
-    <section className="w-full pb-4 lg:pb-24">
+    <section className="w-full pb-4">
       <h2 className="p-4 text-black/70 drop-shadow-md font-bold text-2xl">
         Newest Restaurants
       </h2>
