@@ -53,7 +53,7 @@ export default function RestaurantsPage() {
   }
 
   return (
-    <div className="flex flex-col items-center p-2 gap-2 w-full mb-24 lg:mb-0">
+    <div className="flex flex-col items-center p-2 gap-2 w-full">
       <RestaurantCategoriesMenu
         onCategoryClick={handleCategoryClick}
         onFilterButtonClick={() => {
@@ -65,7 +65,7 @@ export default function RestaurantsPage() {
         <NotFoundAfterLoading href="/restaurants/new" />
       )}
       {
-        <div className="grid grid-flow-row place-items-center pl-2 pr-2 gap-8 lg:grid-cols-3 lg:pl-16 lg:pr-16 2xl:grid-cols-4 w-full">
+        <div className="grid grid-cols-1 place-items-center pl-2 pr-2 gap-8 lg:grid-cols-3 lg:pl-16 lg:pr-16 2xl:grid-cols-4 w-full">
           {isLoading && <RestaurantCardSkeleton />}
           {restaurantCards &&
             restaurantCards.length > 0 &&
