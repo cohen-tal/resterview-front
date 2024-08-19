@@ -32,10 +32,10 @@ export interface Recents {
 export interface RecentReview
   extends Omit<
     ReviewAPI,
-    "images" | "dateAdded" | "dateEdited" | "likes" | "dislikes" | "author"
+    "dateAdded" | "dateEdited" | "likes" | "dislikes" | "author"
   > {
-  name: string;
-  image: string;
+  authorName: string;
+  authorImage: string;
   restaurantId: string;
 }
 
