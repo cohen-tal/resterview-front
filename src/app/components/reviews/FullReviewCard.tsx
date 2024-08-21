@@ -13,6 +13,7 @@ import EditReviewForm from "../forms/EditReviewForm";
 import warningAnimation from "../../../../public/lottie/warning.json";
 import Lottie from "react-lottie";
 import fetchAPI from "@/utils/fetchUtil";
+import ImagesGridContainer from "../containers/ImagesGridContainer";
 
 interface ReviewCardProps {
   review: ReviewAPI;
@@ -125,6 +126,13 @@ export default function FullReviewCard({
         <p className="text-md break-words text-light-gray max-w-[90%]">
           {review.text}
         </p>
+        {review?.images && review.images.length > 0 && (
+          <ImagesGridContainer
+            userImage={review?.author.image}
+            userName={review?.author.name}
+            images={review?.images ?? []}
+          />
+        )}
         {!isAuthor && (
           <div className="flex place-items-center lg:place-content-start gap-4">
             <button className="flex place-items-center gap-1 border rounded-full text-gray-500 p-2">
