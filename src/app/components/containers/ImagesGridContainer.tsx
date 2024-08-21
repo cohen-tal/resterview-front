@@ -32,7 +32,7 @@ export default function ImagesGridContainer({
 
   return (
     <>
-      <div className="flex flex-col overflow-hidden w-full rounded-xl h-[248px]">
+      <div className="flex flex-col lg:flex-row overflow-hidden w-full rounded-xl h-[248px] lg:h-40">
         {firstRow && (
           <div className="relative flex flex-1">
             {renderRow(images[0], images[1])}
@@ -43,7 +43,7 @@ export default function ImagesGridContainer({
             {renderRow(images[2], images[3])}
             {showMoreButton && (
               <div
-                className="absolute flex items-center justify-center cursor-pointer left-0 w-1/2 h-full bg-[#2021248c] text-white text-3xl z-50 font-roboto"
+                className="absolute flex items-center justify-center cursor-pointer lg:right-0 w-1/2 h-full bg-[#2021248c] text-white text-3xl z-50 font-roboto"
                 onClick={() => setShowModal(true)}
               >
                 <div>+{images.length - 4}</div>
