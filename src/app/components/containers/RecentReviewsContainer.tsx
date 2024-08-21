@@ -9,14 +9,14 @@ export default function RecentReviewsContainer({
   reviews: RecentReview[];
 }) {
   return (
-    <div className="p-4 flex flex-col mr-auto w-full overflow-x-hidden">
+    <div className="p-4 flex flex-col mr-auto w-full overflow-x-hidden overflow-y-hidden">
       <div className="font-semibold">
         <h2 className="text-black/70 drop-shadow-md font-anton font-bold text-2xl">
           Recent Reviews
         </h2>
       </div>
       <motion.div
-        className="flex items-start gap-4 py-6 w-fit"
+        className="flex gap-4 py-6 w-fit"
         initial={{ x: 0 }}
         animate={{ x: "calc(-50% - 0.5rem)" }}
         transition={{ ease: "linear", duration: "20", repeat: Infinity }}
