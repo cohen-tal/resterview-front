@@ -28,15 +28,7 @@ export default function RecentReviewCard({ review }: RecentReviewCardProps) {
             </div>
           </div>
         </div>
-
-        <div className="mt-2 max-w-72 line-clamp-2">"{review?.text}"</div>
-        {/* {review?.images && review.images.length > 0 && (
-          <ImagesGridContainer
-            userImage={review?.authorImage ?? ""}
-            userName={review?.authorName!}
-            images={review?.images ?? []}
-          />
-        )} */}
+        <div className="mt-2 max-w-72 line-clamp-2">{`"${review?.text}"`}</div>
       </div>
     </div>
   );
